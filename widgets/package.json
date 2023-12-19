@@ -1,0 +1,25 @@
+{
+  "name": "events-localist-widgets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "webpack --config ./build/webpack-watch.config.js --watch",
+    "create-dev-bundle": "webpack --config ./build/webpack-watch.config.js",
+    "dist": "webpack --config ./build/webpack-dist.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@ucd-lib/theme-elements": "^1.2.9",
+    "lit": "^3.1.0"
+  },
+  "devDependencies": {
+    "@ucd-lib/cork-app-build": "^0.4.2",
+    "fs-extra": "^11.1.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^4.10.0"
+  }
+}
