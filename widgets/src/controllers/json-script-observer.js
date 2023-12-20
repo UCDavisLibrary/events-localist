@@ -16,7 +16,7 @@ export class JsonScriptObserver {
 
   _onChildListMutation(){
     Array.from(this.host.children).forEach(child => {
-      if ( child.nodeName === 'SCRIPT' && child.type === 'application/json' ) {
+      if ( (child.nodeName === 'SCRIPT') && child.type === 'application/json' ) {
         let data = {};
         try {
           data = JSON.parse(child.text);
