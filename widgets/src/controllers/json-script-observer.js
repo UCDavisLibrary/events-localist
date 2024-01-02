@@ -3,6 +3,7 @@ import { MutationObserverController } from '@ucd-lib/theme-elements/utils/contro
 /**
  * @description A controller that will watch the child list of the host element for a json script tag
  * and set the host element's properties to the values in the json script tag.
+ * Also looks for template tags
  * @property {LitElement} host - the host element
  * @property {Array} props - an array of properties to set on the host element.  If empty, all properties
  */
@@ -26,6 +27,30 @@ export class JsonScriptObserver {
         for( let key in data ) {
           if ( this.props.length && this.props.indexOf(key) === -1 ) continue;
           this.host[key] = data[key];
+        }
+        this.host.requestUpdate();
+        return;
+      }
+
+      if ( child.nodeName === 'TEMPLATE' && child.hasAttribute('ele-prop') ) {
+        let prop = child.getAttribute('ele-prop');
+        if ( this.props.length && this.props.indexOf(prop) === -1 ) return;
+
+        // handle if ele prop has a dot in it
+        let keys = prop.split('.');
+        let obj = this.host;
+        for( let i = 0; i < keys.length-1; i++ ) {
+          if ( !obj[keys[i]] ) obj[keys[i]] = {};
+          obj = obj[keys[i]];
+        }
+        const propType = child.hasAttribute('ele-prop-type') ? child.getAttribute('ele-prop-type') : 'string';
+
+        if ( propType === 'boolean' ) {
+          obj[keys[keys.length-1]] = child.innerHTML === 'true' ? true : false;
+        } else if ( propType === 'array' ) {
+          obj[keys[keys.length-1]] = child.innerHTML.split(',').map(item => item.trim());
+        } else {
+          obj[keys[keys.length-1]] = child.innerHTML;
         }
         this.host.requestUpdate();
         return;
