@@ -1,10 +1,17 @@
 import { LitElement } from 'lit';
 import * as templates from "./ucdlib-localist-event.tpl.js";
 
+import Mixin from "@ucd-lib/theme-elements/utils/mixins/mixin.js";
+import { MainDomElement } from "@ucd-lib/theme-elements/utils/mixins/main-dom-element.js";
+
 import { JsonScriptObserver } from "../controllers/json-script-observer.js";
 import DatetimeUtils from "../utils/datetime.js";
 
-export default class UcdlibLocalistEvent extends LitElement {
+/**
+ * @description Displays a single localist event
+ */
+export default class UcdlibLocalistEvent extends Mixin(LitElement)
+  .with(MainDomElement) {
 
   static get properties() {
     return {
@@ -15,10 +22,6 @@ export default class UcdlibLocalistEvent extends LitElement {
       startDate: { state: true },
       endDate: { state: true }
     }
-  }
-
-  static get styles() {
-    return templates.styles();
   }
 
   constructor() {

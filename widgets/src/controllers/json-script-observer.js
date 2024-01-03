@@ -43,12 +43,14 @@ export class JsonScriptObserver {
           if ( !obj[keys[i]] ) obj[keys[i]] = {};
           obj = obj[keys[i]];
         }
-        const propType = child.hasAttribute('ele-prop-type') ? child.getAttribute('ele-prop-type') : 'string';
 
+        // handle prop type and assign value
+        const propType = child.hasAttribute('ele-prop-type') ? child.getAttribute('ele-prop-type') : 'string';
         if ( propType === 'boolean' ) {
           obj[keys[keys.length-1]] = child.innerHTML === 'true' ? true : false;
         } else if ( propType === 'array' ) {
-          obj[keys[keys.length-1]] = child.innerHTML.split(',').map(item => item.trim());
+          const separator = child.hasAttribute('ele-prop-separator') ? child.getAttribute('ele-prop-separator') : ',';
+          obj[keys[keys.length-1]] = child.innerHTML.split(separator).map(item => item.trim());
         } else {
           obj[keys[keys.length-1]] = child.innerHTML;
         }
