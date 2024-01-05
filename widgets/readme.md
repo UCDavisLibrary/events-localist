@@ -13,7 +13,7 @@ The template will look something like this:
 ```html
 <script type="text/javascript">
   const scriptTag = document.createElement('script');
-  scriptTag.src = 'https://files.library.ucdavis.edu/localist/js/widgets/latest/ucdlib-events-widgets.js';
+  scriptTag.src = 'https://files.library.ucdavis.edu/localist/widgets/js/latest/ucdlib-events-widgets.js';
   if ( document.body ) {
     document.body.appendChild(scriptTag);
   } else if (document.head) {
@@ -74,4 +74,4 @@ http-server -p 3000
 ```
 
 ## Deployment
-Run `npm run dist` to generate the production bundle, and then upload it to `files.library.ucdavis.edu/localist/js/widgets/latest`
+Run `npm run dist` to generate the production bundle, and then upload it to `files.library.ucdavis.edu/localist/widgets/js/latest`
