@@ -1,32 +1,27 @@
+import domUtils from "../dom-utils.js";
+
+/**
+ * @description For any dom manipulation that needs to happen
+ */
 class PageScripts {
 
-  constructor(){
-    this.defaultPageTheme = 'ucdlib';
-    this.pageTheme = this.defaultPageTheme;
-  }
-
   init(){
-    this.setPageTheme();
-    console.log('PageScripts init', this.pageTheme);
+    this.updateHeaderSearchDomain();
   }
 
-  setPageTheme(){
-    const s = document.querySelector('#ucdlib-header-html-import');
-    if ( !s || !s.src ) {
-      this.pageTheme = this.defaultPageTheme;
-      return;
-    }
-    if ( s.src.includes('datalab') ){
-      this.pageTheme = 'datalab';
-    } else {
-      this.pageTheme = this.defaultPageTheme;
-    }
+  /**
+   * @description Update the header search form action to match the page theme
+   * @returns
+   */
+  updateHeaderSearchDomain(){
+    const searchEle = document.querySelector('ucd-theme-search-form');
+    if ( !searchEle || !domUtils.getThemeDomain() ) return;
 
+    searchEle.formAction = domUtils.getThemeDomain();
   }
 }
 
 let instance = new PageScripts();
-
 if( document.readyState === 'complete' ) {
   instance.init();
 } else {

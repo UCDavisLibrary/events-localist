@@ -7,4 +7,8 @@ import '@ucd-lib/theme-elements/brand/ucd-theme-quick-links/ucd-theme-quick-link
 import '@ucd-lib/theme-elements/brand/ucd-theme-search-form/ucd-theme-search-form.js'
 import '@ucd-lib/theme-elements/brand/ucd-theme-search-popup/ucd-theme-search-popup.js'
 
+// custom components
+import './elements/ucdlib-breadcrumbs.js';
+
+// init page scripts
 import './page-scripts/index.js';
