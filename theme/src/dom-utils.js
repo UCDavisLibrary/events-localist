@@ -20,7 +20,7 @@ class DomUtils {
     if ( !script || !script.src ) {
       return this.pageTheme;
     }
-    if ( s.src.includes('datalab') ){
+    if ( script.src.includes('datalab') ){
       this.pageTheme = 'datalab';
     }
     return this.pageTheme;

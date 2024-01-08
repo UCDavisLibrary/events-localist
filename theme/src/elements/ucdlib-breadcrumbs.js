@@ -7,7 +7,11 @@ export default class UcdlibBreadcrumbs extends LitElement {
 
   static get properties() {
     return {
-      crumbs: {type: Array}
+      crumbs: {type: Array},
+      localistDomain: {type: String, attribute: 'localist-domain'},
+      datalabChannelPath: {type: String, attribute: 'datalab-channel-path'},
+      localistHomeText: {type: String, attribute: 'localist-home-text'},
+      isChannelPage: {type: Boolean, attribute: 'is-channel-page'}
     }
   }
 
@@ -18,6 +22,9 @@ export default class UcdlibBreadcrumbs extends LitElement {
   constructor() {
     super();
     this.render = render.bind(this);
+    this.datalabChannelPath = 'datalab';
+    this.localistHomeText = 'Events';
+    this.isChannelPage = false;
 
     this.crumbs = [];
   }
@@ -35,16 +42,49 @@ export default class UcdlibBreadcrumbs extends LitElement {
 
   init(){
     if ( !this.getLocalistEle() ) return;
+    this.setLocalistDomain();
     this.crumbs = this.transformCrumbs();
     this.hideLocalistEle();
   }
 
+  /**
+   * @description Transform the localist breadcrumb data into breadcrumb data for this component
+   *  - Changes name of localist home crumb (or removes if datalab)
+   *  - Adds either datalab or ucdlib site as first crumb
+   *  - Adds datalab channel crumb if applicable
+   */
   transformCrumbs(){
-    console.log(domUtils.getThemeDomain());
     const crumbs = this.getLocalistCrumbs();
+    if ( !crumbs.length ) return crumbs;
+
+    if ( domUtils.getPageTheme() == 'datalab' ){
+      crumbs.shift(); // drop localist home crumb
+      if ( this.isChannelPage ){
+        crumbs[0].text = this.localistHomeText;
+      } else {
+        crumbs.unshift({
+          text: this.localistHomeText,
+          href: this.getDatalabChannel()
+        })
+      }
+    } else {
+      crumbs[0].text = this.localistHomeText;
+      if ( !this.isChannelPage ){
+        crumbs[0].href = this.localistDomain;
+      }
+    }
+
+    crumbs.unshift({
+      text: 'Home',
+      href: domUtils.getThemeDomain()
+    });
+
     return crumbs;
   }
 
+  /**
+   * @description Hide the native localist breadcrumb element
+   */
   hideLocalistEle(){
     const localistEle = this.getLocalistEle();
     if ( !localistEle ) return;
@@ -82,7 +122,32 @@ export default class UcdlibBreadcrumbs extends LitElement {
         href: ''
       });
     }
+    if ( this.isChannelPage && !lastCrumb ){
+      const firstCrumb = localistEle.querySelector('li.em-breadcrumbs_first');
+      if ( firstCrumb ){
+        crumbs.push({
+          text: firstCrumb.innerText,
+          href: ''
+        });
+      }
+    }
     return crumbs;
+  }
+
+  /**
+   * @description Set the localist domain based on the current window location if not set by attribute
+   */
+  setLocalistDomain(){
+    if ( !this.localistDomain ) {
+      this.localistDomain = window.location.origin;
+    }
+  }
+
+  /**
+   * @description Get the datalab channel url
+   */
+  getDatalabChannel(){
+    return `${this.localistDomain}/${this.datalabChannelPath}`;
   }
 
 }
