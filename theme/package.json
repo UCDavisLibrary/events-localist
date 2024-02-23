@@ -6,15 +6,17 @@
   "scripts": {
     "watch": "webpack --config ./build/webpack-watch.config.js --watch",
     "create-dev-bundle": "webpack --config ./build/webpack-watch.config.js",
-    "dist": "webpack --config ./build/webpack-dist.config.js"
+    "dist": "webpack --config ./build/webpack-dist.config.js",
+    "dev-server": "http-server -p 3005"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@ucd-lib/theme-elements": "^1.2.9",
+    "@ucd-lib/theme-elements": "^2.0.1",
     "breakpoint-sass": "^3.0.0",
+    "js-datepicker": "^5.18.2",
     "lit": "^3.1.0",
     "normalize-scss": "^7.0.1",
     "sass-burger": "^1.3.1"
