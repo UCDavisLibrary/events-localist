@@ -4,6 +4,7 @@ import datePickerCss from "js-datepicker/dist/datepicker.min.css";
 import buttonStyles from "@ucd-lib/theme-sass/2_base_class/_buttons.css.js";
 
 export function styles() {
+
   const elementStyles = css`
     :host {
       display: block;
@@ -50,14 +51,17 @@ export function styles() {
       display: none;
     }
     .qs-active {
-      background-color: #FFBF00;
+      background-color: #DBEAF7;
+    }
+    .qs-range-middle {
+      background-color: #DBEAF7;
     }
     .qs-current {
       text-decoration: none;
+      border: 1px solid #FFBF00;
     }
     .qs-square:not(.qs-empty):not(.qs-disabled):not(.qs-day):not(.qs-active):hover {
-      background-color: transparent;
-      border: 1px solid #B0D0ED;
+      background-color: #FFBF00;
     }
     .qs-squares {
       padding: .5rem;
@@ -88,7 +92,10 @@ export function styles() {
     }
 
     #dp-root {
-      display: none;
+      display: none !important;
+    }
+    #dp-end {
+      display: none !important;
     }
   `;
 
@@ -103,9 +110,10 @@ return html`
   <div class='main ${this.isSameYear ? 'is-same-year' : ''}'>
     <div>
       <input id='dp-root' />
+      <input id='dp-end' />
     </div>
     <div class='btn-container'>
-      <a href="#" class="btn btn--alt3 btn--block">View This Week</a>
+      <a href="${this.calendarUrl}/week" class="btn btn--alt3 btn--block">View This Week</a>
     </div>
   </div>
 `;}
