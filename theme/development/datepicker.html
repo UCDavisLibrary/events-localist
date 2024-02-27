@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Localist Theme</title>
+  <title>Localist Datepicker</title>
   <script src="/js/dev/ucdlib-localist-theme.js"></script>
   <link rel="stylesheet" type="text/css" href="https://files.library.ucdavis.edu/localist/theme/v1.0.0/css/ucdlib-localist-theme.css">
 </head>
@@ -26,16 +26,45 @@
     }
   </style>
   <div class="one">
-    <ucdlib-datepicker calendar-url='https://events.library.ucdavis.edu/datalab/calendar'></ucdlib-datepicker>
+    <ucdlib-datepicker
+      log-url
+      calendar-url='https://events.library.ucdavis.edu/datalab/calendar'
+      query-url="https://events.library.ucdavis.edu/datalab/calendar/day/2024/1/23?card_size=small&days=10&experience=&order=date">
+    </ucdlib-datepicker>
+  </div>
+  <div class="one">
+    <ucdlib-datepicker
+      log-url
+      calendar-url='https://events.library.ucdavis.edu/datalab/calendar'
+      query-url="https://events.library.ucdavis.edu/datalab/calendar/">
+    </ucdlib-datepicker>
+  </div>
+  <div class="one">
+    <ucdlib-datepicker
+      log-url
+      calendar-url='https://events.library.ucdavis.edu/datalab/calendar'
+      query-url="https://events.library.ucdavis.edu/datalab/calendar/month/2024/2/">
+    </ucdlib-datepicker>
   </div>
   <div class="two">
-    <ucdlib-datepicker calendar-url='https://events.library.ucdavis.edu/datalab/calendar'></ucdlib-datepicker>
+    <ucdlib-datepicker
+      log-url
+      calendar-url='https://events.library.ucdavis.edu/datalab/calendar'
+      query-url="https://events.library.ucdavis.edu/datalab/calendar/week/2024/2/23"
+      >
+    </ucdlib-datepicker>
   </div>
   <div class="three">
-    <ucdlib-datepicker calendar-url='https://events.library.ucdavis.edu/datalab/calendar'></ucdlib-datepicker>
+    <ucdlib-datepicker
+      log-url
+      calendar-url='https://events.library.ucdavis.edu/datalab/calendar'>
+    </ucdlib-datepicker>
   </div>
   <div class="four">
-    <ucdlib-datepicker calendar-url='https://events.library.ucdavis.edu/datalab/calendar'></ucdlib-datepicker>
+    <ucdlib-datepicker
+      log-url
+      calendar-url='https://events.library.ucdavis.edu/datalab/calendar'>
+    </ucdlib-datepicker>
   </div>
 </body>
 </html>

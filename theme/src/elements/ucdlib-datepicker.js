@@ -1,5 +1,6 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucdlib-datepicker.tpl.js";
+import UrlParser from '../utils/url-parser.js';
 
 import datepicker from 'js-datepicker'
 
@@ -8,12 +9,18 @@ import datepicker from 'js-datepicker'
  * @description Datepicker component. When a date is selected, the user is redirected to the calendar week view for that date.
  *
  * @prop {String} calendarUrl - The base url for the calendar. i.e. https://events.library.ucdavis.edu/datalab/calendar
+ * @prop {String} queryUrl - The url to parse for the initial start and end dates. If not provided, the current url is used.
+ * @prop {Boolean} logUrl - If true, the url is logged to the console instead of redirecting the user.
+ * @prop {String} datePickerId - The id option passed to the datepicker class. If not provided, a random id is generated.
  */
 export default class UcdlibDatepicker extends LitElement {
 
   static get properties() {
     return {
       calendarUrl: {type: String, attribute: 'calendar-url'},
+      buttonText: {type: String, attribute: 'button-text'},
+      queryUrl: {type: String, attribute: 'query-url'},
+      logUrl: {type: Boolean, attribute: 'log-url'},
       datePickerId: {type: String, attribute: 'date-picker-id'},
       selectedDate: {state: true},
       isSameYear: {state: true}
@@ -31,9 +38,12 @@ export default class UcdlibDatepicker extends LitElement {
 
     this.selectedDate = new Date();
     this.calendarUrl = '';
+    this.queryUrl = '';
+    this.logUrl = false;
+    this.buttonText = 'Reset to Present';
 
     // necessary if more than one element on the page
-    this.datePickerId = Math.random().toString(36).substring(7);
+    this.datePickerId = Math.random().toString(36).substring(10);
   }
 
   /**
@@ -51,8 +61,6 @@ export default class UcdlibDatepicker extends LitElement {
     const datepickerEndEle = this.renderRoot.getElementById('dp-end');
     if ( !datepickerEle ) return;
 
-    const selectedDate = this.getDateFromUrl();
-
     const options = {
       id: this.datePickerId,
       alwaysShow: true,
@@ -62,70 +70,98 @@ export default class UcdlibDatepicker extends LitElement {
       onMonthChange: this._onMonthChange.bind(this),
       maxDate: (new Date(3000, 1, 1))
     };
-    if ( selectedDate ) options.dateSelected = selectedDate;
-
     this.datePicker = datepicker(datepickerEle, options);
 
     const endOptions = {
       id: this.datePickerId
     }
     this.datePickerEnd = datepicker(datepickerEndEle, endOptions);
+
+    this.setStateFromUrl();
   }
 
   /**
-   * @description Get the date from the url
-   * URL varies depending on the date interval that is selected (ie month week or day)
-   * ${calendarUrl}/${dateInterval}/${year}/${month}/${day}
-   * @returns Date
+   * @description Sets the inital state of the datepicker from the queryUrl property or current url
+   * @returns
    */
-  getDateFromUrl(){
-    const urlSplit = window.location.href.split('/');
+  setStateFromUrl(){
+    if ( !this.datePicker ) return;
 
-    // url can be month, day, or week
-    // has three parts: year/month/day after specified date interval
-    if ( urlSplit.includes('day') ){
-      const i = urlSplit.indexOf('day');
-      if ( urlSplit.length < i+4 ) return new Date();
-      const year = urlSplit[i+1];
-      const month = urlSplit[i+2];
-      const day = urlSplit[i+3];
-      return new Date(year, month-1, day);
-    } else if ( urlSplit.includes('week') ){
-      const i = urlSplit.indexOf('week');
-      if ( urlSplit.length < i+4 ) return new Date();
-      const year = urlSplit[i+1];
-      const month = urlSplit[i+2];
-      const day = urlSplit[i+3];
-      return new Date(year, month-1, day);
-    } else if ( urlSplit.includes('month') ){
-      const i = urlSplit.indexOf('month');
-      if ( urlSplit.length < i+3 ) return new Date();
-      const year = urlSplit[i+1];
-      const month = urlSplit[i+2];
-      return new Date(year, month-1);
+    // parse url
+    const url = this.queryUrl || window.location.href;
+    const urlParser = new UrlParser(url);
+
+    // set start date
+    const startDate = urlParser.getStartDate();
+    this.datePicker.setDate(startDate);
+    this.selectedDate = startDate;
+
+    // set end date
+    const endDate = urlParser.getEndDate();
+    if ( endDate ){
+      this.setEndDate(endDate);
     }
   }
 
+  /**
+   * @method setEndDate
+   * @description Set the end date for the datepicker if is date range
+   * @param {Date} date
+   * @returns
+   */
+  setEndDate(date){
+    const datepickerEle = this.renderRoot.getElementById('dp-root');
+    const datepickerEndEle = this.renderRoot.getElementById('dp-end');
+
+    if ( !datepickerEndEle || !datepickerEle ) return;
+    this.datePickerEnd.setDate(date);
+
+    // reset max date and re-render visible datepicker
+    // otherwise any date links after end date will be disabled
+    const selected = this.selectedDate || new Date();
+    this.datePicker.maxDate = new Date(3000, 0, 1);
+    this.datePicker.navigate(selected);
+  }
+
+  /**
+   * @description Event handler for when a date is selected
+   * @param {*} instance - The datepicker instance
+   * @param {Date} date - The selected date
+   * @returns
+   */
   _onSelect(instance, date){
     this.selectedDate = date;
+    this.datePickerEnd.setDate();
     if ( !this.calendarUrl ) {
       console.warn('No calendar url provided for datepicker');
       return;
     }
     const start = this._getStartofWeek(date);
     const url = `${this.calendarUrl}/week/${start.getFullYear()}/${start.getMonth()+1}/${start.getDate()}`;
-    //window.location.href = url;
+    if ( this.logUrl ) {
+      console.log(url);
+    } else {
+      window.location.href = url;
+    }
 
   }
 
-  // get start of current week (week starts on sunday)
+  /**
+   * @description Get the start of the week (sunday) for a given date
+   * @param {Date} date
+   * @returns
+   */
   _getStartofWeek(date){
+    date = new Date(date);
     const day = date.getDay();
     if ( !day ) return date;
     const diff = date.getDate() - day;
     return new Date(date.setDate(diff));
   }
 
+  /**
+   * @description Event handler for when the user changes the displayed month
+   */
   _onMonthChange(){
     const visibleYear = this.datePicker.currentYear;
     const today = new Date();
