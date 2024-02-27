@@ -15,6 +15,7 @@
   "type": "module",
   "dependencies": {
     "@ucd-lib/theme-elements": "^2.0.1",
+    "@ucd-lib/theme-sass": "^6.0.1",
     "breakpoint-sass": "^3.0.0",
     "js-datepicker": "^5.18.2",
     "lit": "^3.1.0",

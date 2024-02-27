@@ -9,6 +9,7 @@ import datepicker from 'js-datepicker'
  * @description Datepicker component. When a date is selected, the user is redirected to the calendar week view for that date.
  *
  * @prop {String} calendarUrl - The base url for the calendar. i.e. https://events.library.ucdavis.edu/datalab/calendar
+ * @prop {String} buttonText - The text for the reset button
  * @prop {String} queryUrl - The url to parse for the initial start and end dates. If not provided, the current url is used.
  * @prop {Boolean} logUrl - If true, the url is logged to the console instead of redirecting the user.
  * @prop {String} datePickerId - The id option passed to the datepicker class. If not provided, a random id is generated.
@@ -149,7 +150,7 @@ export default class UcdlibDatepicker extends LitElement {
   /**
    * @description Get the start of the week (sunday) for a given date
    * @param {Date} date
-   * @returns
+   * @returns {Date}
    */
   _getStartofWeek(date){
     date = new Date(date);

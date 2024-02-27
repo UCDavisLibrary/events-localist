@@ -10,6 +10,7 @@ import '@ucd-lib/theme-elements/brand/ucd-theme-search-popup/ucd-theme-search-po
 // custom components
 import './elements/ucdlib-breadcrumbs.js';
 import './elements/ucdlib-datepicker.js';
+import './elements/ucdlib-focal-link.js';
 
 // init page scripts
 import './page-scripts/index.js';
