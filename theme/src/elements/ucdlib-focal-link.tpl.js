@@ -7,6 +7,7 @@ export function styles() {
   const elementStyles = css`
     :host {
       display: block;
+      margin-bottom: 1rem;
     }
     ::slotted(svg) {
       width: 50%;

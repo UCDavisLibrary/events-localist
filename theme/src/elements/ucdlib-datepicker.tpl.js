@@ -13,6 +13,7 @@ export function styles() {
   const elementStyles = css`
     :host {
       display: block;
+      margin-bottom: 1rem;
     }
     .main {
       border: 1px solid #B0D0ED;
@@ -80,7 +81,7 @@ export function styles() {
       padding: .5rem;
     }
 
-    @container ucdlib-datepicker (min-width: 400px) {
+    @container ucdlib-datepicker (min-width: 500px) {
       .qs-datepicker {
         font-size: 1.5rem;
       }
@@ -89,11 +90,6 @@ export function styles() {
       }
       .btn-container {
         padding: 1rem;
-      }
-    }
-    @container ucdlib-datepicker (min-width: 500px) {
-      .qs-datepicker {
-        font-size: 1.75rem;
       }
     }
 

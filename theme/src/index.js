@@ -11,6 +11,7 @@ import '@ucd-lib/theme-elements/brand/ucd-theme-search-popup/ucd-theme-search-po
 import './elements/ucdlib-breadcrumbs.js';
 import './elements/ucdlib-datepicker.js';
 import './elements/ucdlib-focal-link.js';
+import './elements/ucdlib-channel.js';
 
 // init page scripts
 import './page-scripts/index.js';

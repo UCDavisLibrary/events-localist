@@ -111,169 +111,6 @@ var LOCALIST_SETTINGS = {"theme_base":"emphasis","photo_aspect_ratio":1.54193548
 <ucdlib-breadcrumbs is-channel-page></ucdlib-breadcrumbs>
 
 
-  <header class="em-header">
-
-    <nav id="main-menu" class="em-main-menu" aria-label="Main menu">
-      <div class="em-main-menu-container">
-        <div class="em-main-menu-row">
-          <a class="em-user-avatar" href="https://events.library.ucdavis.edu/spelkey_162/home" aria-label="Dashboard">
-            <img class="" height="50" width="50" alt="Stephen Pelkey" src="https://localist-images.azureedge.net/photos/44996673392651/small/09ed37c2bf494d4f2b6cdf6f18b226026b69164d.jpg" />
-
-
-
-
-          </a>
-          <p class="em-user-visible-name">Stephen Pelkey</p>
-          <button class="em-close-icon" onclick="Slzr.Theme.UserMenu.hideMobileMenu();">
-            <i class="fas fa-times fa-sm"><span class="sr-only">Close Menu</span></i>
-          </button>
-        </div>
-        <div class="em-main-menu-container-item em-submit-event">
-          <p><a href="https://events.library.ucdavis.edu/event/create" class="em-button em-primary">Submit an event</a></p>
-        </div>
-
-          <div class="em-main-menu-container-item">
-            <p class="em-sub-header">Administration</p>
-            <p><a href="/admin" class="admin_link">Platform Admin</a></p>
-          </div>
-
-        <div class="em-main-menu-container-item">
-          <p class="em-sub-header">Dashboard</p>
-          <p><a href="">Home</a></p>
-          <p><a href="/spelkey_162/calendar">My Calendar</a></p>
-          <div class="em-messages-container">
-            <a class="em-user-messages" href="/spelkey_162/messages">Messages
-
-
-
-
-
-
-            </a>
-          </div>
-          <p><a href="/spelkey_162/friends/manage">Following</a></p>
-        </div>
-        <div class="em-main-menu-container-item">
-          <p class="em-sub-header">Settings</p>
-          <p><a href="/settings">Account settings</a></p>
-          <p><a href="https://events.library.ucdavis.edu/settings/notifications">Communications</a></p>
-          <p><a href="/settings/bulletins">Bulletins</a></p>
-        </div>
-        <div class="em-main-menu-row em-last">
-
-              <p><a href="/auth/logout">Log Out<i class="fas fa-sign-out-alt"></i></a></p>
-
-        </div>
-      </div>
-    </nav>
-
-  <div onclick="Slzr.Theme.UserMenu.hideMobileMenu();" id="backdrop" class="em-backdrop" tabindex="-1" aria-hidden="true" hidden></div>
-  <div class="content-wrapper">
-    <div class="em-navbar-container">
-      <div id="search-bar-component" class="em-search-bar-component">
-
-<div id="search-bar" class="em-search-bar">
-    <form class="em-search-bar-form"
-          autocomplete="off"
-          method="get"
-          id="topsearch"
-          action="/search">
-        <label for="search-bar-input" class="sr-only">Search</label>
-        <div class="em-basic-input">
-                <i id="search-bar-icon" class="search-bar-icon fas fa-search"></i>
-
-                <input name="search" type="text" id="search-bar-input" type="text"
-                    placeholder="Search all UC Davis Library events..."
-                    onclick="Slzr.Theme.SearchBar.showSearchBarMenu();"
-                    onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = 'Search all UC Davis Library events...'"
-                    aria-label="Search all UC Davis Library events..."
-                    aria-haspopup="menu"
-                    aria-controls="sub-menu">
-            </div>
-        <button id="top-submit" type="submit" class="em-search-button"><span class="em-sr-only">Search</span></button>
-    </form>
-    <div id="sub-menu" class="em-sub-menu" role="menu"
-        oncontextmenu="Slzr.Theme.SearchBar.hideSearchBarMenu();"
-        onclick="Slzr.Theme.SearchBar.hideSearchBarMenu();">
-        <a role="menuitem" href="/search/places">Places</a>
-        <a role="menuitem" href="/calendar">Events</a>
-
-
-          <a role="menuitem" href="/search/departments">Departments</a>
-
-    </div>
-</div>
-<div
-    oncontextmenu="Slzr.Theme.SearchBar.hideSearchBarMenu();"
-    onclick="Slzr.Theme.SearchBar.hideSearchBarMenu();"
-    id="search-bar-backdrop"
-    class="em-search-bar-backdrop"
-    tabindex="-1"
-    aria-hidden="true" hidden>
-</div>
-
-        <button class="em-mobile-close-search" onclick="Slzr.Theme.UserMenu.hideMobileMenu();">
-          <i class="fas fa-times fa-sm"><span class="sr-only">Close Menu</span></i>
-        </button>
-      </div>
-      <div class="em-mobile-menu-icons">
-        <button class="em-search-icon" aria-controls="search-bar-component" aria-expanded="false" onclick="Slzr.Theme.UserMenu.showMobileSearchBar(this);">
-          <i class="fas fa-search fa-sm"><span class="sr-only">Search</span></i>
-        </button>
-        <!-- Mobile icons -->
-
-          <button aria-expanded="false" aria-controls="main-menu" class="em-user-avatar" onclick="Slzr.Theme.UserMenu.showMobileMenu(this);">
-            <img class="" height="50" width="50" alt="Stephen Pelkey" src="https://localist-images.azureedge.net/photos/44996673392651/small/09ed37c2bf494d4f2b6cdf6f18b226026b69164d.jpg" />
-
-
-
-
-          </button>
-
-      </div>
-      <div class="em-desktop-menu-icons">
-        <!-- Desktop icons -->
-
-          <button aria-expanded="false" aria-controls="desktop-profile-menu" aria-label="Menu" onclick="Slzr.Theme.UserMenu.showMenu(this);" class="em-user-avatar-desktop" id="user-menu-button" aria-controls="desktop-profile-menu">
-            <img class="" height="50" width="50" alt="Stephen Pelkey" src="https://localist-images.azureedge.net/photos/44996673392651/small/09ed37c2bf494d4f2b6cdf6f18b226026b69164d.jpg" />
-
-
-
-
-          </button>
-          <div class="em-desktop-user-menu">
-            <i onclick="Slzr.Theme.UserMenu.showMenu();" id="angle-down-icon" role="button" tabindex="-1" aria-expanded="false" aria-controls="desktop-profile-menu" class="fas fa-chevron-down fa-sm em-angle-down-icon"><span class="sr-only">Main Menu</span></i>
-            <div role="region" aria-label="Main menu" id="desktop-profile-menu" class="em-desktop-profile-menu">
-
-                <a href="/admin" class="admin_link">Administration</a>
-
-              <a href="https://events.library.ucdavis.edu/spelkey_162/home">Dashboard
-
-
-
-
-
-
-              </a>
-              <a href="/settings">Settings</a>
-
-                <a href="/auth/logout" data-ga-event data-ga-category="Account" data-ga-action="Logout">Log Out<i class="fas fa-sign-out-alt"></i></a>
-
-            </div>
-
-
-                <a href="https://events.library.ucdavis.edu/event/create" class="em-button em-secondary em-white em-gray">Submit an event <i class="fa fa-long-arrow-alt-right"></i></a>
-
-
-          </div>
-
-      </div>
-
-    </div>
-  </div>
-</header>
-
 <div id="breadcrumbs" class="em-breadcrumbs content-wrapper"><ul role="navigation" aria-label="Breadcrumb"><li class="em-breadcrumbs_first"><a href="/">UC Davis Library Events</a></li><li class="em-breadcrumbs_separator"><i class="fas fa-angle-right"></i></li><li class="em-breadcrumbs_last">Datalab</li></ul></div>
 
 
@@ -299,6 +136,22 @@ var LOCALIST_SETTINGS = {"theme_base":"emphasis","photo_aspect_ratio":1.54193548
 
 
 <div class="content-wrapper">
+  <div class="html_component ucdlib-sidebar">
+    <ucdlib-datepicker
+      log-url
+      calendar-url='https://events.library.ucdavis.edu/datalab/calendar'
+      query-url="https://events.library.ucdavis.edu/datalab/calendar/day/2024/1/23?card_size=small&days=10&experience=&order=date">
+    </ucdlib-datepicker>
+  </div>
+  <div class="html_component ucdlib-sidebar">
+    <ucdlib-focal-link
+      display-text="View Workshop Descriptions"
+      href="#"
+      brand-color="admin-blue"
+    >
+    <svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 0v64h64V96H64zm384 0H192v64H448V96zM64 224v64h64V224H64zm384 0H192v64H448V224zM64 352v64h64V352H64zm384 0H192v64H448V352z"/></svg>
+  </ucdlib-focal-link>
+  </div>
   <div class="em-filter-wrapper ">
 
     <h2 class="em-filter-header">Events</h2>
@@ -844,6 +697,8 @@ var LOCALIST_SETTINGS = {"theme_base":"emphasis","photo_aspect_ratio":1.54193548
 </div>
 
 </div>
+
+<ucdlib-channel></ucdlib-channel>
 
 
   <footer class="em-footer">
