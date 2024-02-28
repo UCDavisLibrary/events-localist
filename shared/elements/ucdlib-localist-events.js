@@ -12,7 +12,8 @@ export default class UcdlibLocalistEvents extends LitElement {
 
   static get properties() {
     return {
-      relativeCalendarUrl: { type: String }
+      relativeCalendarUrl: { type: String },
+      eventLayout: { type: String, attribute: 'event-layout' }
     }
   }
 
@@ -20,14 +21,27 @@ export default class UcdlibLocalistEvents extends LitElement {
     return styles();
   }
 
+  willUpdate(props){
+    if (props.has('eventLayout')) {
+      const allowedValues = ['teaser__1'];
+      if ( !allowedValues.includes(this.eventLayout) ) {
+        console.warn('Invalid event-layout value.  Must be one of: ', allowedValues.join(', '));
+        this.eventLayout = 'teaser__1';
+      }
+      this.adoptEvents();
+    }
+  }
+
   firstUpdated(){
     this.adoptEvents();
+    this.hideBrandedFooter();
   }
 
   constructor() {
     super();
     this.render = templates.render.bind(this);
     this.relativeCalendarUrl = '';
+    this.eventLayout = 'teaser__1';
 
     this.MutationObserverController = new MutationObserverController(this, {childList: true}, 'adoptEvents');
     this._jsonScriptObserver = new JsonScriptObserver(this);
@@ -42,11 +56,20 @@ export default class UcdlibLocalistEvents extends LitElement {
     const eventsContainer = this.renderRoot.querySelector('#events');
     if ( !eventsContainer ) return;
 
+    // clear any existing events
+    eventsContainer.innerHTML = '';
+
     const events = Array.from(this.querySelectorAll('ucdlib-localist-event'));
     events.forEach(eventEle => {
-      eventsContainer.appendChild(eventEle);
+      const copy = eventEle.cloneNode(true);
+      const [template, columns] = this.eventLayout.split('__');
+      copy.setAttribute('template', template);
+
+      if ( columns == 1) {
+        eventsContainer.appendChild(copy);
+      }
+
     });
-    this.hideBrandedFooter();
   }
 
   /**

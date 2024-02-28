@@ -5,6 +5,7 @@ export function styles() {
   const elementStyles = css`
     :host {
       display: block;
+      min-height: 26px;
     }
   `;
 

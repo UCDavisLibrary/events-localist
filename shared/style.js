@@ -29,12 +29,32 @@ export default function styles() {
   .event-body {
     flex: 1;
   }
-  ucdlib-localist-event .event-template-basic .img-container {
+  .heading--highlight a {
+    text-decoration: none;
+    color: var(--forced-contrast-heading-primary, #022851);
+  }
+  .heading--highlight a:hover {
+    text-decoration: underline;
+    color: var(--forced-contrast-heading-primary, #022851);
+  }
+  .icon-grid {
+    display: grid;
+    grid-template-columns: 1rem auto;
+    gap: .5rem;
+  }
+  .icon-grid__icon {
+    color: #73ABDD;
+  }
+  ucdlib-localist-event {
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+  ucdlib-localist-event .event-template-teaser .img-container {
     margin-right: .5rem;
     max-width: 15%;
   }
   @media (min-width: 480px) {
-    ucdlib-localist-event .event-template-basic .img-container {
+    ucdlib-localist-event .event-template-teaser .img-container {
       margin-right: 1rem;
       max-width: 25%;
     }

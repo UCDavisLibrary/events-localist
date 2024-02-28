@@ -16,6 +16,8 @@ export default class UcdlibLocalistEvent extends Mixin(LitElement)
   static get properties() {
     return {
       event: { type: Object },
+      hideExcerpt: { type: Boolean, attribute: 'hide-excerpt'},
+      excerptLength: { type: Number, attribute: 'excerpt-length' },
       template: { type: String },
       dataLoaded: { state: true },
       templates: { state: true },
@@ -29,24 +31,34 @@ export default class UcdlibLocalistEvent extends Mixin(LitElement)
     this.render = templates.render.bind(this);
     this.event = {};
     this.dataLoaded = false;
+    this.hideExcerpt = false;
+    this.excerptLength = 140;
 
     this.templates = {
-      'basic': templates.templateBasic.bind(this)
+      'teaser': templates.templateTeaser.bind(this)
     }
-    this.template = 'basic';
+    this.template = 'teaser';
 
     this._jsonScriptObserver = new JsonScriptObserver(this);
 
   }
 
-  willUpdate(props) {
-    if ( props.has('event') ){
+  willUpdate() {
+    if ( !this.dataLoaded ) {
       this.dataLoaded = (this.event || {}).name ? true : false;
       if ( this.dataLoaded ){
         this.startDate = DatetimeUtils.dateFromLocalist(this.event.starts_at);
+        console.log(this.event.starts_at, this.startDate);
         this.endDate = DatetimeUtils.dateFromLocalist(this.event.ends_at);
       }
     }
+  }
+
+  getExcerpt(){
+    if ( this.hideExcerpt ) return '';
+    if ( !this.event.description_text ) return '';
+    if ( this.event.description_text.length <= this.excerptLength ) return this.event.description_text;
+    return this.event.description_text.substring(0, this.excerptLength) + '...';
   }
 
   /**
