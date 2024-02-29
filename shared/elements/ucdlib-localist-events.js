@@ -1,6 +1,5 @@
 import { LitElement } from 'lit';
 import * as templates from "./ucdlib-localist-events.tpl.js";
-import styles from "../style.js";
 
 import { MutationObserverController } from '@ucd-lib/theme-elements/utils/controllers/index.js';
 import { JsonScriptObserver } from "../controllers/json-script-observer.js";
@@ -13,26 +12,33 @@ export default class UcdlibLocalistEvents extends LitElement {
   static get properties() {
     return {
       relativeCalendarUrl: { type: String },
-      eventLayout: { type: String, attribute: 'event-layout' }
+      eventLayout: { type: String, attribute: 'event-layout' },
+      columnCount: { type: Number, attribute: 'column-count' },
+      events: { state: true }
     }
   }
 
   static get styles() {
-    return styles();
+    return templates.styles();
   }
 
   willUpdate(props){
     if (props.has('eventLayout')) {
-      const allowedValues = ['teaser__1'];
-      if ( !allowedValues.includes(this.eventLayout) ) {
-        console.warn('Invalid event-layout value.  Must be one of: ', allowedValues.join(', '));
-        this.eventLayout = 'teaser__1';
+      if ( !this.allowedLayouts.includes(this.eventLayout) ) {
+        console.warn('Invalid event-layout value.  Must be one of: ', this.allowedLayouts.join(', '));
+        this.eventLayout = 'teaser';
       }
-      this.adoptEvents();
+    }
+    if (props.has('columnCount')) {
+      if ( this.columnCount < 1 || this.columnCount > 4 ) {
+        console.warn('Invalid column-count value.  Must be between 1 and 4');
+        this.columnCount = 1;
+      }
     }
   }
 
-  firstUpdated(){
+  connectedCallback(){
+    super.connectedCallback();
     this.adoptEvents();
     this.hideBrandedFooter();
   }
@@ -41,7 +47,10 @@ export default class UcdlibLocalistEvents extends LitElement {
     super();
     this.render = templates.render.bind(this);
     this.relativeCalendarUrl = '';
-    this.eventLayout = 'teaser__1';
+    this.allowedLayouts = ['teaser', 'card'];
+    this.eventLayout = 'teaser';
+    this.columnCount = 1;
+    this.events = [];
 
     this.MutationObserverController = new MutationObserverController(this, {childList: true}, 'adoptEvents');
     this._jsonScriptObserver = new JsonScriptObserver(this);
@@ -49,26 +58,32 @@ export default class UcdlibLocalistEvents extends LitElement {
 
 
   /**
-   * @description Move any ucdlib-localist-event elements from the light dom into the shadow dom
+   * @description Slot in any ucdlib-localist-event elements from the light dom into the shadow dom
    * @returns
    */
   adoptEvents(){
-    const eventsContainer = this.renderRoot.querySelector('#events');
-    if ( !eventsContainer ) return;
+    const events = [];
+    Array.from(this.querySelectorAll('ucdlib-localist-event')).forEach((ele, i) => {
+      const slotName = `event-${i}`;
+      const event = {ele, slotName};
+      events.push(event);
 
-    // clear any existing events
-    eventsContainer.innerHTML = '';
+      ele.setAttribute('slot', slotName);
+      ele.setAttribute('template', this.eventLayout);
+    });
 
-    const events = Array.from(this.querySelectorAll('ucdlib-localist-event'));
-    events.forEach(eventEle => {
-      const copy = eventEle.cloneNode(true);
-      const [template, columns] = this.eventLayout.split('__');
-      copy.setAttribute('template', template);
+    this.events = events;
+  }
 
-      if ( columns == 1) {
-        eventsContainer.appendChild(copy);
-      }
-
+  updateEventLayout(layout){
+    if ( layout && !this.allowedLayouts.includes(layout) ) {
+      console.warn('Invalid event-layout value.  Must be one of: ', this.allowedLayouts.join(', '));
+      return;
+    } else if ( layout ) {
+      this.eventLayout = layout;
+    }
+    this.events.forEach(event => {
+      event.ele.setAttribute('template', this.eventLayout);
     });
   }
 

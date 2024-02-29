@@ -1,17 +1,13 @@
 import { LitElement } from 'lit';
 import * as templates from "./ucdlib-localist-event.tpl.js";
 
-import Mixin from "@ucd-lib/theme-elements/utils/mixins/mixin.js";
-import { MainDomElement } from "@ucd-lib/theme-elements/utils/mixins/main-dom-element.js";
-
 import { JsonScriptObserver } from "../controllers/json-script-observer.js";
 import DatetimeUtils from "../utils/datetime.js";
 
 /**
  * @description Displays a single localist event
  */
-export default class UcdlibLocalistEvent extends Mixin(LitElement)
-  .with(MainDomElement) {
+export default class UcdlibLocalistEvent extends LitElement {
 
   static get properties() {
     return {
@@ -22,8 +18,15 @@ export default class UcdlibLocalistEvent extends Mixin(LitElement)
       dataLoaded: { state: true },
       templates: { state: true },
       startDate: { state: true },
-      endDate: { state: true }
+      endDate: { state: true },
+      firstDate: { state: true },
+      lastDate: { state: true },
+      cardImageSrc: { state: true }
     }
+  }
+
+  static get styles() {
+    return templates.styles();
   }
 
   constructor() {
@@ -35,7 +38,8 @@ export default class UcdlibLocalistEvent extends Mixin(LitElement)
     this.excerptLength = 140;
 
     this.templates = {
-      'teaser': templates.templateTeaser.bind(this)
+      'teaser': templates.teaser.bind(this),
+      'card': templates.card.bind(this)
     }
     this.template = 'teaser';
 
@@ -47,60 +51,46 @@ export default class UcdlibLocalistEvent extends Mixin(LitElement)
     if ( !this.dataLoaded ) {
       this.dataLoaded = (this.event || {}).name ? true : false;
       if ( this.dataLoaded ){
+
+        // extract/process some data from the event
         this.startDate = DatetimeUtils.dateFromLocalist(this.event.starts_at);
-        console.log(this.event.starts_at, this.startDate);
         this.endDate = DatetimeUtils.dateFromLocalist(this.event.ends_at);
+        this.firstDate = DatetimeUtils.dateFromIsoDate(this.event.first_date);
+        this.lastDate = DatetimeUtils.dateFromIsoDate(this.event.last_date);
+        this.setCardImageSrc();
       }
     }
   }
 
+  setCardImageSrc(){
+    if ( !this.event.img_html ) return;
+
+    // get the image src from the img_html string
+    const imgContainer = document.createElement('div');
+    imgContainer.innerHTML = this.event.img_html;
+    const img = imgContainer.querySelector('img');
+    if ( !img ) return;
+    const imgSrc = (img.src || '').replace('square_300', 'card');
+    this.cardImageSrc = imgSrc;
+
+  }
+
   getExcerpt(){
-    if ( this.hideExcerpt ) return '';
     if ( !this.event.description_text ) return '';
     if ( this.event.description_text.length <= this.excerptLength ) return this.event.description_text;
     return this.event.description_text.substring(0, this.excerptLength) + '...';
   }
 
-  /**
-   * @description Get a string representation of the event's datetime range
-   */
   getDateString(){
-    if (!this.startDate) return '';
-    const isSingleDay = !this.endDate || this.startDate.toDateString() === this.endDate.toDateString();
 
-    const startDay = DatetimeUtils.getDayOfWeek(this.startDate);
-    const startMonth = DatetimeUtils.getMonth(this.startDate);
-    const startDate = this.startDate.getDate();
-    const startYear = this.startDate.getFullYear();
-    const startTime = DatetimeUtils.getTime(this.startDate);
-
-    if ( isSingleDay ) {
-      let time = `${startTime.hours}:${startTime.minutes}`;
-      if ( this.endDate ) {
-        const endTime = DatetimeUtils.getTime(this.endDate);
-        if ( startTime.ampm !== endTime.ampm ) {
-          time += startTime.ampm;
-        }
-        time += ` - ${endTime.hours}:${endTime.minutes}${endTime.ampm}`;
-
-      } else {
-        time += startTime.ampm;
-      }
-
-      return `${startDay}, ${startMonth} ${startDate}, ${startYear} | ${time}`;
+    // this is a long running multi-day event, like an exhibit
+    if ( this.event.has_instances && !this.endDate && this.firstDate && this.lastDate ){
+      return DatetimeUtils.getDateString(this.firstDate, this.lastDate, true);
     }
 
-    // todo: how to display multi-day events
-    const endDay = DatetimeUtils.getDayOfWeek(this.endDate);
-    const endMonth = DatetimeUtils.getMonth(this.endDate);
-    const endDate = this.endDate.getDate();
-    const endYear = this.endDate.getFullYear();
-    const endTime = DatetimeUtils.getTime(this.endDate);
-
-    const startString = `${startMonth} ${startDate}, ${startYear}, ${startTime.hours}:${startTime.minutes}${startTime.ampm}`;
-    const endString = `${endMonth} ${endDate}, ${endYear}, ${endTime.hours}:${endTime.minutes}${endTime.ampm}`;
-    return `${startString} - ${endString}`;
+    return DatetimeUtils.getDateString(this.startDate, this.endDate);
   }
+
 
 }
 
