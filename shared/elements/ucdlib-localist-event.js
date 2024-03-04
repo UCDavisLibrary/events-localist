@@ -6,6 +6,10 @@ import DatetimeUtils from "../utils/datetime.js";
 
 /**
  * @description Displays a single localist event
+ * @property {Object} event - the localist event object
+ * @property {Boolean} hideExcerpt - hide the event description
+ * @property {Number} excerptLength - the length of the event description excerpt
+ * @property {String} template - the template to use for rendering the event (teaser, card)
  */
 export default class UcdlibLocalistEvent extends LitElement {
 
@@ -21,7 +25,8 @@ export default class UcdlibLocalistEvent extends LitElement {
       endDate: { state: true },
       firstDate: { state: true },
       lastDate: { state: true },
-      cardImageSrc: { state: true }
+      cardImageSrc: { state: true },
+      name: { state: true }
     }
   }
 
@@ -36,6 +41,7 @@ export default class UcdlibLocalistEvent extends LitElement {
     this.dataLoaded = false;
     this.hideExcerpt = false;
     this.excerptLength = 140;
+    this.name = '';
 
     this.templates = {
       'teaser': templates.teaser.bind(this),
@@ -43,25 +49,32 @@ export default class UcdlibLocalistEvent extends LitElement {
     }
     this.template = 'teaser';
 
-    this._jsonScriptObserver = new JsonScriptObserver(this);
+    this._jsonScriptObserver = new JsonScriptObserver(this, [], '_onDomChildPropertyChanged');
 
   }
 
-  willUpdate() {
-    if ( !this.dataLoaded ) {
-      this.dataLoaded = (this.event || {}).name ? true : false;
-      if ( this.dataLoaded ){
 
-        // extract/process some data from the event
-        this.startDate = DatetimeUtils.dateFromLocalist(this.event.starts_at);
-        this.endDate = DatetimeUtils.dateFromLocalist(this.event.ends_at);
-        this.firstDate = DatetimeUtils.dateFromIsoDate(this.event.first_date);
-        this.lastDate = DatetimeUtils.dateFromIsoDate(this.event.last_date);
-        this.setCardImageSrc();
-      }
-    }
+  /**
+   * @description Called when the event property is set from the json script observer
+   * Extracts and processes some data from the event and triggers a render
+   */
+  _onDomChildPropertyChanged(){
+
+    // extract/process some data from the event
+    this.startDate = DatetimeUtils.dateFromLocalist(this.event.starts_at);
+    this.endDate = DatetimeUtils.dateFromLocalist(this.event.ends_at);
+    this.firstDate = DatetimeUtils.dateFromIsoDate(this.event.first_date);
+    this.lastDate = DatetimeUtils.dateFromIsoDate(this.event.last_date);
+    this.setCardImageSrc();
+    this.setName();
+
+    this.requestUpdate();
+    this.dataLoaded = Object.keys(this.event || {}).length > 0;
   }
 
+  /**
+   * @description Sets the cardImageSrc element property from the img_html event property
+   */
   setCardImageSrc(){
     if ( !this.event.img_html ) return;
 
@@ -72,19 +85,38 @@ export default class UcdlibLocalistEvent extends LitElement {
     if ( !img ) return;
     const imgSrc = (img.src || '').replace('square_300', 'card');
     this.cardImageSrc = imgSrc;
-
   }
 
+  setName(){
+    if ( !this.event.name ) this.name = '';
+    this.name = this.event.name.replace(/&amp;/g, '&');
+  }
+
+  /**
+   * @description Returns a shortened version of the event description (if applicable)
+   * @returns {String} - the event description excerpt
+   */
   getExcerpt(){
     if ( !this.event.description_text ) return '';
-    if ( this.event.description_text.length <= this.excerptLength ) return this.event.description_text;
-    return this.event.description_text.substring(0, this.excerptLength) + '...';
+    const excerpt = this.event.description_text.replace(/&amp;/g, '&');
+    if ( excerpt.length <= this.excerptLength ) return excerpt;
+    return excerpt.substring(0, this.excerptLength) + '...';
   }
 
+  /**
+   * @description Returns a formatted date string for the event
+   * @returns {String}
+   */
   getDateString(){
 
     // this is a long running multi-day event, like an exhibit
-    if ( this.event.has_instances && !this.endDate && this.firstDate && this.lastDate ){
+    if (
+      this.event.has_many_future_instances &&
+      !this.endDate &&
+      this.firstDate &&
+      this.lastDate &&
+      this.firstDate.toDateString() !== this.lastDate.toDateString()
+       ){
       return DatetimeUtils.getDateString(this.firstDate, this.lastDate, true);
     }
 

@@ -41,6 +41,47 @@ class DomUtils {
     return this.themeDomain;
   }
 
+  /**
+   * @description Get the calendar URL based on the current page theme
+   * @returns {String}
+   */
+  getCalendarUrl(){
+    const currentOrigin = window.location.origin;
+    const pageTheme = this.getPageTheme();
+    if ( pageTheme === 'ucdlib' ) {
+      return `${currentOrigin}/calendar`;
+    }
+    return `${currentOrigin}/${pageTheme}/calendar`;
+  }
+
+  /**
+   * @description Get the current active event filters
+   * @param {Boolean} asUrlParams - return as URLSearchParams
+   * @returns {FormData|URLSearchParams}
+   */
+  getActiveEventFilters(asUrlParams=false){
+    const form = this.getFilterForm();
+    if ( !form ) {
+      if ( asUrlParams ) {
+        return new URLSearchParams();
+      }
+      return new FormData();
+    }
+    const data = new FormData(form);
+    if ( asUrlParams ) {
+      return new URLSearchParams(data);
+    }
+    return data;
+  }
+
+  /**
+   * @description Get the event filter form
+   * @returns {HTMLFormElement}
+   */
+  getFilterForm(){
+    return document.querySelector('#filter-dropdown');
+  }
+
 }
 
 export default new DomUtils();

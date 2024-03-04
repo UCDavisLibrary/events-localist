@@ -1,7 +1,7 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucdlib-breadcrumbs.tpl.js";
 
-import domUtils from '../dom-utils.js';
+import domUtils from '../utils/dom-utils.js';
 
 export default class UcdlibBreadcrumbs extends LitElement {
 

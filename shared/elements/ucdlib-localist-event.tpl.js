@@ -104,7 +104,7 @@ export function teaser(){
       </div>
       <div class="event-body">
         <div>
-          <h2 class='heading--highlight'><a href=${this.event.url}>${this.event.name || ''}</a></h2>
+          <h2 class='heading--highlight'><a href=${this.event.url}>${this.name}</a></h2>
           <div ?hidden=${this.hideExcerpt} class='excerpt'>${this.getExcerpt()}</div>
           ${renderIconGrid.call(this)}
         </div>
@@ -120,7 +120,7 @@ export function card(){
       <div class="aspect--16x9 u-background-image" style="background-image: url('${this.cardImageSrc}')"></div>
       </a>
       <div>
-        <h2 class='heading--highlight'><a href=${this.event.url}>${this.event.name || ''}</a></h2>
+        <h2 class='heading--highlight'><a href=${this.event.url}>${this.name}</a></h2>
         <div ?hidden=${this.hideExcerpt} class='excerpt'>${this.getExcerpt()}</div>
         ${renderIconGrid.call(this)}
       </div>

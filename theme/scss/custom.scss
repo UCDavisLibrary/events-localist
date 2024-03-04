@@ -26,3 +26,18 @@
 #breadcrumbs {
   display: none;
 }
+
+// filter dropdown
+.em-filter-wrapper .em-filter-dropdown {
+  z-index: 1001;
+}
+.em-filter-wrapper {
+  border-bottom: 4px dotted #FFBF00;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+// utilities
+[hidden] {
+  display: none !important;
+}

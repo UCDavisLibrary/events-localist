@@ -1,0 +1,38 @@
+ucdlib-channel {
+  .em-filter-wrapper .em-filter-button {
+    min-width: 5rem;
+  }
+  h2.em-filter-header {
+    display: none;
+  }
+  .box_title.box_header h4 {
+    display: none;
+  }
+  .em-filter-wrapper .em-filter-dropdown {
+    height: 500px;
+  }
+
+  .em-select-input select, .em-select-input .em-select-fallback {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .em-platform-nav-component .em-platform-nav-container a.em-button {
+    box-sizing: border-box;
+  }
+
+  ucdlib-localist-events {
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 48em) {
+    .em-filter-wrapper .em-filter-dropdown {
+      height: auto;
+    }
+  }
+
+  @media (min-width: 48em) {
+    .em-filter-wrapper .em-filter-dropdown.em-more-options {
+      bottom: auto;
+    }
+  }
+}

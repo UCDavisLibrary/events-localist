@@ -1,4 +1,4 @@
-import domUtils from "../dom-utils.js";
+import domUtils from "../utils/dom-utils.js";
 
 /**
  * @description For any dom manipulation that needs to happen
@@ -7,6 +7,7 @@ class PageScripts {
 
   init(){
     this.updateHeaderSearchDomain();
+    this.changeFilterDropdownIcon();
   }
 
   /**
@@ -18,6 +19,13 @@ class PageScripts {
     if ( !searchEle || !domUtils.getThemeDomain() ) return;
 
     searchEle.formAction = domUtils.getThemeDomain();
+  }
+
+  changeFilterDropdownIcon(){
+    const icon = document.querySelector('#em-button-toggle-filter .fa-sliders-h');
+    if ( !icon ) return;
+    icon.classList.remove('fa-sliders-h');
+    icon.classList.add('fa-filter');
   }
 }
 

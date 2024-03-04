@@ -22,6 +22,16 @@ export default class UrlParser {
   }
 
   /**
+   * @description Get the search term from the calendar url
+   * @returns {String}
+   */
+  getSearchTerm(){
+    const url = new URL(this.url);
+    const params = new URLSearchParams(url.search);
+    return params.get('search');
+  }
+
+  /**
    * @description Get the start date from the calendar url path
    * It is usually the last three path segments - restOfUrl/year/month/day
    * @returns {Date}
@@ -58,7 +68,8 @@ export default class UrlParser {
    */
   getEndDate(){
     const startDate = this.getStartDate();
-    const params = new URLSearchParams(this.url);
+    const url = new URL(this.url);
+    const params = new URLSearchParams(url.search);
     const urlSplit = this.urlPathAsArray();
 
     if ( params.has('days') ){

@@ -45,6 +45,7 @@ export default class UcdlibChannel extends LitElement {
     if ( !this.selfMoved ) {
       this.makeColumns();
       this.insertPageTitle();
+      this.insertDateRangeHeader();
     }
   }
 
@@ -64,6 +65,28 @@ export default class UcdlibChannel extends LitElement {
     breadcrumbs.before(pageTitle);
     this.pageTitleInserted = true;
     return true;
+  }
+
+  insertDateRangeHeader(){
+    const labelEle = document.querySelector('.em-filter-header');
+    const label = labelEle ? labelEle.textContent.trim() : '';
+    const prevEle = document.querySelector('.em-navigation-previous');
+    const prevLink = prevEle ? prevEle.getAttribute('href') : '';
+    const nextEle = document.querySelector('.em-navigation-next');
+    const nextLink = nextEle ? nextEle.getAttribute('href') : '';
+
+    // insert as first child of em-filter-wrapper
+    if ( !label || !prevLink || !nextLink ) return;
+    const dateRangeHeader = document.createElement('ucdlib-date-range');
+    dateRangeHeader.setAttribute('label', label);
+    dateRangeHeader.setAttribute('prev-link', prevLink);
+    dateRangeHeader.setAttribute('next-link', nextLink);
+    const filterWrapper = document.querySelector('.em-filter-wrapper');
+    if ( !filterWrapper ) {
+      console.warn('Could not find filter wrapper element. Not inserting date range header');
+      return;
+    }
+    filterWrapper.prepend(dateRangeHeader);
   }
 
   /**

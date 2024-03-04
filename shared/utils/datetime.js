@@ -80,6 +80,7 @@ class DatetimeUtils {
   }
 
   getDateString(startDate, endDate, hideTime){
+    //console.log('getDateString', startDate, endDate, hideTime);
     if (!startDate) return '';
     const isSingleDay = !endDate || startDate.toDateString() === endDate.toDateString();
 

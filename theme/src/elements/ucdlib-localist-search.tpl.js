@@ -27,6 +27,7 @@ return html`
       <h4>${this.labelText}</h4>
     </label>
     <ucd-theme-search-form
+      value=${this.value}
       @search=${this._onSearch}
       id="localist-search"
       placeholder="${this.placeholderText}">

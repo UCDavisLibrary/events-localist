@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
 
 import layouts from "@ucd-lib/theme-sass/5_layout/_index.css.js";
+import buttons from "@ucd-lib/theme-sass/2_base_class/_buttons.css.js";
 
 export function styles() {
   const elementStyles = css`
@@ -12,21 +13,28 @@ export function styles() {
     box-sizing: border-box;
     font-family: "proxima-nova", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   }
+  .btn {
+    box-sizing: border-box;
+  }
   `;
 
   return [
     layouts,
+    buttons,
     elementStyles
   ];
 }
 
 export function render() {
 
-  if (this.columnCount == 1) {
-    return renderOneColumn.call(this);
-  } else {
-    return renderMultiColumn.call(this);
-  }
+  return html`
+    <div>
+      ${this.columnCount == 1 ? renderOneColumn.call(this) : renderMultiColumn.call(this)}
+    </div>
+    <div ?hidden=${!this.showCalendarLink}>
+      <a href=${this.calendarUrl} class="btn btn--primary btn--block">${this.calendarLinkText}</a>
+    </div>
+  `;
 }
 
 function renderOneColumn(){

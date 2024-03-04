@@ -8,6 +8,7 @@ export function styles() {
   const elementStyles = css`
     :host {
       display: block;
+      position: relative;
     }
   `;
 

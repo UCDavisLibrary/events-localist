@@ -12,6 +12,7 @@ import "../../shared/elements/ucdlib-localist-event.js";
 
 // custom components
 import './elements/ucdlib-breadcrumbs.js';
+import './elements/ucdlib-date-range.js';
 import './elements/ucdlib-datepicker.js';
 import './elements/ucdlib-focal-link.js';
 import './elements/ucdlib-channel.js';

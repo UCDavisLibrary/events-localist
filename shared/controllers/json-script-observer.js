@@ -6,16 +6,19 @@ import { MutationObserverController } from '@ucd-lib/theme-elements/utils/contro
  * Also looks for template tags
  * @property {LitElement} host - the host element
  * @property {Array} props - an array of properties to set on the host element.  If empty, all properties
+ * @property {String} hostCallback - the name of the host element's method to call after properties are set
  */
 export class JsonScriptObserver {
-  constructor(host, props=[]){
+  constructor(host, props=[], hostCallback='requestUpdate'){
     (this.host = host).addController(this);
     this.props = props;
+    this.hostCallback = hostCallback;
     this.host._jsonScriptObserverCallback = this._onChildListMutation.bind(this);
     this.MutationObserverController = new MutationObserverController(this.host, {childList: true}, '_jsonScriptObserverCallback');
   }
 
   _onChildListMutation(){
+    let requestUpdate = false;
     Array.from(this.host.children).forEach(child => {
       if ( (child.nodeName === 'SCRIPT') && child.type === 'application/json' ) {
         let data = {};
@@ -28,7 +31,7 @@ export class JsonScriptObserver {
           if ( this.props.length && this.props.indexOf(key) === -1 ) continue;
           this.host[key] = data[key];
         }
-        this.host.requestUpdate();
+        requestUpdate = true;
         return;
       }
 
@@ -54,9 +57,10 @@ export class JsonScriptObserver {
         } else {
           obj[keys[keys.length-1]] = child.innerHTML;
         }
-        this.host.requestUpdate();
+        requestUpdate = true;
         return;
       }
     });
+    if ( requestUpdate ) this.host[this.hostCallback]();
   }
 }

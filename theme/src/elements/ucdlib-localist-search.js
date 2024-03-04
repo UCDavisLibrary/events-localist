@@ -1,6 +1,8 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucdlib-localist-search.tpl.js";
 
+import domUtils from '../utils/dom-utils.js';
+
 /**
  * @class UcdlibLocalistSearch
  * @description A custom element for displaying a search bar for the localist events calendar
@@ -9,9 +11,10 @@ export default class UcdlibLocalistSearch extends LitElement {
 
   static get properties() {
     return {
+      value: { type: String },
       labelText: {type: String, attribute: 'label-text'},
       placeholderText: {type: String, attribute: 'placeholder-text'},
-      domain: {type: String},
+      calendarUrl: {type: String, attribute: 'calendar-url'},
       logUrl: {type: Boolean, attribute: 'log-url'}
     }
   }
@@ -25,7 +28,16 @@ export default class UcdlibLocalistSearch extends LitElement {
     this.render = render.bind(this);
     this.labelText = '';
     this.placeholderText = '';
-    this.domain = 'https://events.library.ucdavis.edu';
+    this.calendarUrl = '';
+    this.value = '';
+  }
+
+  /**
+   * @description Lit lifecycle hook
+   */
+  connectedCallback(){
+    super.connectedCallback();
+    this.setValueFromUrl();
   }
 
   /**
@@ -40,6 +52,17 @@ export default class UcdlibLocalistSearch extends LitElement {
         clearInterval(interval);
       }
     }, 100);
+  }
+
+  /**
+   * @description Sets the value of the search form from the url
+   */
+  setValueFromUrl(){
+    const url = new URL(window.location.href);
+    const search = url.searchParams.get('search');
+    if( search ) {
+      this.value = search;
+    }
   }
 
 
@@ -62,8 +85,11 @@ export default class UcdlibLocalistSearch extends LitElement {
    * @returns
    */
   _onSearch(e){
-    const searchTerm = encodeURIComponent(e.detail.searchTerm).replace(/%20/g, '+');
-    const url = `${this.domain}/search/events/?search=${searchTerm}`;
+    let url = this.calendarUrl || domUtils.getCalendarUrl();
+    const currentFilters = domUtils.getActiveEventFilters(true);
+    currentFilters.set('search', e.detail.searchTerm);
+    url += `?${currentFilters.toString()}`;
+
     if ( this.logUrl ) {
       console.log('Search URL', url);
       return;

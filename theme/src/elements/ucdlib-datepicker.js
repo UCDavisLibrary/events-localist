@@ -1,6 +1,7 @@
 import { LitElement } from 'lit';
 import {render, styles} from "./ucdlib-datepicker.tpl.js";
 import UrlParser from '../utils/url-parser.js';
+import domUtils from '../utils/dom-utils.js';
 
 import datepicker from 'js-datepicker'
 
@@ -13,6 +14,7 @@ import datepicker from 'js-datepicker'
  * @prop {String} queryUrl - The url to parse for the initial start and end dates. If not provided, the current url is used.
  * @prop {Boolean} logUrl - If true, the url is logged to the console instead of redirecting the user.
  * @prop {String} datePickerId - The id option passed to the datepicker class. If not provided, a random id is generated.
+ * @prop {Boolean} startOfWeek - If true, the datepicker will navigate to the start of the week when a date is selected.
  */
 export default class UcdlibDatepicker extends LitElement {
 
@@ -23,6 +25,7 @@ export default class UcdlibDatepicker extends LitElement {
       queryUrl: {type: String, attribute: 'query-url'},
       logUrl: {type: Boolean, attribute: 'log-url'},
       datePickerId: {type: String, attribute: 'date-picker-id'},
+      startOfWeek: {type: Boolean, attribute: 'start-of-week'},
       selectedDate: {state: true},
       isSameYear: {state: true}
     }
@@ -42,6 +45,7 @@ export default class UcdlibDatepicker extends LitElement {
     this.queryUrl = '';
     this.logUrl = false;
     this.buttonText = 'Reset to Present';
+    this.startOfWeek = false;
 
     // necessary if more than one element on the page
     this.datePickerId = Math.random().toString(36).substring(10);
@@ -132,13 +136,29 @@ export default class UcdlibDatepicker extends LitElement {
    */
   _onSelect(instance, date){
     this.selectedDate = date;
+
+    // build base url
     this.datePickerEnd.setDate();
-    if ( !this.calendarUrl ) {
-      console.warn('No calendar url provided for datepicker');
-      return;
+    let calendarUrl = this.calendarUrl || domUtils.getCalendarUrl();
+    if ( this.startOfWeek ) {
+      date = this._getStartofWeek(date);
     }
-    const start = this._getStartofWeek(date);
-    const url = `${this.calendarUrl}/week/${start.getFullYear()}/${start.getMonth()+1}/${start.getDate()}`;
+    let url = `${calendarUrl}/week/${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
+
+    // add active filters
+    let currentFilters = domUtils.getActiveEventFilters(true);
+    const filtersToRemove = ['start_date', 'days'];
+    filtersToRemove.forEach(f => currentFilters.delete(f));
+    const urlParser = new UrlParser(this.queryUrl || window.location.href);
+    const search = urlParser.getSearchTerm();
+    if ( search ) {
+      currentFilters.set('search', search);
+    }
+    if ( currentFilters.toString() ) {
+      url += `?${currentFilters.toString()}`;
+    }
+
+    // log or redirect
     if ( this.logUrl ) {
       console.log(url);
     } else {
