@@ -1,0 +1,43 @@
+// for single events, places, departments, etc
+.ucdlib-single {
+  .em-header-type {
+    margin-top: 1rem;
+
+    .em-header_bg {
+      background-color: #ebf3fa !important;
+      filter: none !important;
+    }
+
+    .em-header-card {
+      background-color: transparent !important;
+
+      .em-header-card_text::before {
+        display: none !important;
+      }
+
+      .em-header-card_image {
+        position: relative;
+        padding-top: 100%;
+        overflow: hidden;
+
+        img {
+          height: auto;
+          position: absolute;
+          top: 0;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+  @media (min-width: 48em) {
+    .em-header-type .em-header-card {
+      flex-flow: row-reverse;
+    }
+
+    .em-header-card {
+      .em-header-card_image {
+        width: 25%;
+      }
+    }
+  }
+}

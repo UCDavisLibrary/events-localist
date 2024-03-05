@@ -136,7 +136,7 @@ return html`
       <input id='dp-end' />
     </div>
     <div class='btn-container'>
-      <a href="${this.calendarUrl}/week" class="btn btn--invert btn--block">
+      <a href="${this.getCalendarUrl()}/week" class="btn btn--invert btn--block">
         <span class='btn__icon'>${clockIcon}</span>
         <span>${this.buttonText}</span>
       </a>

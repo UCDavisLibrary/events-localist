@@ -129,6 +129,14 @@ export default class UcdlibDatepicker extends LitElement {
   }
 
   /**
+   * @description Get calendar url for current channel
+   * @returns {String}
+   */
+  getCalendarUrl(){
+    return this.calendarUrl || domUtils.getCalendarUrl();
+  }
+
+  /**
    * @description Event handler for when a date is selected
    * @param {*} instance - The datepicker instance
    * @param {Date} date - The selected date
@@ -139,7 +147,7 @@ export default class UcdlibDatepicker extends LitElement {
 
     // build base url
     this.datePickerEnd.setDate();
-    let calendarUrl = this.calendarUrl || domUtils.getCalendarUrl();
+    let calendarUrl = this.getCalendarUrl();
     if ( this.startOfWeek ) {
       date = this._getStartofWeek(date);
     }

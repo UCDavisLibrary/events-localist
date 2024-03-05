@@ -17,6 +17,7 @@ import './elements/ucdlib-datepicker.js';
 import './elements/ucdlib-focal-link.js';
 import './elements/ucdlib-channel.js';
 import './elements/ucdlib-localist-search.js';
+import './elements/ucdlib-single-hero.js';
 
 // init page scripts
 import './page-scripts/index.js';
