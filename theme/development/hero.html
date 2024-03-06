@@ -5,8 +5,30 @@
   <title>Localist Theme</title>
   <script src="/js/dev/ucdlib-localist-theme.js"></script>
   <link rel="stylesheet" type="text/css" href="/css/ucdlib-localist-theme.css">
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
-  <ucdlib-single-hero></ucdlib-single-hero>
+  <ucdlib-single-hero
+    heading-text="AggieOpen Invited Speaker: Marco Seiferle-Valencia"
+    img-lightbox-link="https://localist-images.azureedge.net/photos/45773867048520/huge/18e0784c87123d9fbcd3a0ed42c97d4ed4820952.jpg">
+    <template ele-prop="imgEle">
+      <img class="img_square_300@2x" height="600" width="600" alt="Marco Seiferle-Valencia" src="https://localist-images.azureedge.net/photos/45773867048520/square_300@2x/18e0784c87123d9fbcd3a0ed42c97d4ed4820952.jpg">
+    </template>
+    <template ele-prop="streamInfo">
+      <div class="em-stream-info">
+        <p><a href="https://ucdavis.zoom.us/webinar/register/WN_i6_EYHMCQ_yydDdloodoTA#/registration"><b>Register for Zoom link.&nbsp;</b></a></p>
+
+      </div>
+    </template>
+    <div class="em-list_dates__container" slot="dates">
+      <p class="em-date"><i class="fas fa-clock"></i>
+        Tuesday, March 5, 2024 11am
+      </p>
+    </div>
+  </ucdlib-single-hero>
 </body>
 </html>

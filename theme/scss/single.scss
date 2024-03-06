@@ -1,43 +1,57 @@
+@use "@ucd-lib/theme-sass/2_base_class/_buttons-mixin.scss" as *;
+
 // for single events, places, departments, etc
 .ucdlib-single {
-  .em-header-type {
-    margin-top: 1rem;
 
-    .em-header_bg {
-      background-color: #ebf3fa !important;
-      filter: none !important;
+  ucdlib-single-hero {
+
+    .em-header-card_share {
+      display: none;
     }
 
-    .em-header-card {
-      background-color: transparent !important;
-
-      .em-header-card_text::before {
-        display: none !important;
-      }
-
-      .em-header-card_image {
-        position: relative;
-        padding-top: 100%;
-        overflow: hidden;
-
-        img {
-          height: auto;
-          position: absolute;
-          top: 0;
-          border-radius: 50%;
-        }
-      }
+    .em-list_dates__container .fa-clock {
+      color: #73ABDD;
     }
+    .user_action .fa-long-arrow-alt-right {
+      display: none;
+    }
+
+    .user_action .btn {
+      box-sizing: border-box;
+      @include btn--primary();
+    }
+
+    .em-list_dates__toggle {
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-block;
+      color: #13639E;
+      font-weight: 700;
+      padding-left: 1rem;
+    }
+
+     .em-list_dates__toggle:hover+.em-list_dates__content {
+      opacity: 1;
+      visibility: visible;
+      z-index: 1001;
   }
-  @media (min-width: 48em) {
-    .em-header-type .em-header-card {
-      flex-flow: row-reverse;
-    }
 
-    .em-header-card {
-      .em-header-card_image {
-        width: 25%;
-      }
-    }
+    .em-list_dates__content {
+      border-radius: 2px;
+      color: #fff;
+      padding: 1rem;
+      background-color: #000;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      min-width: 9.125rem;
+      right: 50%;
+      transform: translateX(50%);
+      transition: opacity 1s;
+      opacity: 0;
+      visibility: hidden;
+      white-space: nowrap;
   }
+  }
+
 }

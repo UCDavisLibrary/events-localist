@@ -37,6 +37,10 @@
   margin-bottom: 1rem;
 }
 
+.em-register_modal {
+  z-index: 1001;
+}
+
 // utilities
 [hidden] {
   display: none !important;
