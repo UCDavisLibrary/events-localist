@@ -11,7 +11,8 @@ export default class UcdlibBreadcrumbs extends LitElement {
       localistDomain: {type: String, attribute: 'localist-domain'},
       datalabChannelPath: {type: String, attribute: 'datalab-channel-path'},
       localistHomeText: {type: String, attribute: 'localist-home-text'},
-      isChannelPage: {type: Boolean, attribute: 'is-channel-page'}
+      isChannelPage: {type: Boolean, attribute: 'is-channel-page'},
+      hasInitialized: {state: true}
     }
   }
 
@@ -25,6 +26,7 @@ export default class UcdlibBreadcrumbs extends LitElement {
     this.datalabChannelPath = 'datalab';
     this.localistHomeText = 'Events';
     this.isChannelPage = false;
+    this.hasInitialized = false;
 
     this.crumbs = [];
   }
@@ -45,6 +47,7 @@ export default class UcdlibBreadcrumbs extends LitElement {
     this.setLocalistDomain();
     this.crumbs = this.transformCrumbs();
     this.hideLocalistEle();
+    this.hasInitialized = true;
   }
 
   /**

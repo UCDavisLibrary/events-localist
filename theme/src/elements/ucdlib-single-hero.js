@@ -71,7 +71,6 @@ export default class UcdlibSingleHero extends LitElement {
     }
     if ( registerLink ) {
       this.registerLink = registerLink;
-      console.log('registerLink', registerLink);
     }
   }
 

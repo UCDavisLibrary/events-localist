@@ -1,0 +1,35 @@
+@use "@ucd-lib/theme-sass/2_base_class/_buttons-mixin.scss" as *;
+
+.ucdlib-footer {
+  font-weight: 600;
+  line-height: 1.618;
+
+  .btn {
+    @include btn();
+  }
+  .btn--primary {
+    @include btn--primary();
+  }
+  .btn--alt2 {
+    @include btn--alt2();
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  figure {
+    margin: 0 0 1rem;
+  }
+
+  figure > img {
+    margin-bottom: .5rem;
+  }
+}
+.social-follow a {
+  background-image: url(http://library.ucdavis.edu/wp-content/themes/ucdlib-theme-wp/assets/img/social-follow.svg);
+}

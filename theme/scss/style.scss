@@ -1,5 +1,7 @@
 @use './fonts.scss' as fonts;
+@use './footer.scss' as footer;
 @use './theme.scss' as theme;
 @use './channel.scss' as channel;
 @use './custom.scss' as custom;
 @use './single.scss' as single;
+@use './sitewide-shims.scss' as sitewide_shims;

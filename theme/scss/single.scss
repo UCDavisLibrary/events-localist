@@ -12,13 +12,15 @@
     .em-list_dates__container .fa-clock {
       color: #73ABDD;
     }
-    .user_action .fa-long-arrow-alt-right {
-      display: none;
-    }
+    .user-action, .em-actions {
+      .fa-long-arrow-alt-right {
+        display: none;
+      }
 
-    .user_action .btn {
-      box-sizing: border-box;
-      @include btn--primary();
+      .btn, .em-link.buytickets {
+        box-sizing: border-box;
+        @include btn--primary();
+      }
     }
 
     .em-list_dates__toggle {
@@ -51,7 +53,94 @@
       opacity: 0;
       visibility: hidden;
       white-space: nowrap;
+    }
   }
+
+  .em-about_info {
+    margin-bottom: 0;
+    .em-link {
+      font-weight: 400;
+    }
+    .em-divider {
+      width: 0.0625rem;
+      height: 1rem;
+      margin: 0 .5rem;
+      background: #c0c2cd;
+    }
+    .em-link i.fas {
+      margin-left: 0;
+    }
+  }
+
+  .em-content_about {
+    margin-top: 2rem !important;
+
+    .em-about_location__website {
+      display: none !important;
+    }
+    .em-about_location__address {
+      color: #4C4C4C;
+      font-style: italic;
+    }
+
+  }
+
+  .ucdlib-add-to-calendar a {
+    margin-right: .75rem;
+  }
+
+  .em-event-meta-data-tags {
+    margin-top: 2rem;
+  }
+
+  .em-section_map {
+    border-top: 4px dotted #FFBF00;
+    padding-top: 1rem;
+  }
+
+  .em-about_map.em-link.em-mobile {
+    display: none !important;
+  }
+
+  .ucdlib-event-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .em-event-meta-data-component .em-event-meta-data-container>div>p {
+    text-transform: initial;
+    color: #022851;
+    font-size: 1.42rem;
+    font-weight: 800;
+  }
+  .em-event-meta-data-component .em-event-meta-data-container>div {
+    margin-top: 2rem;
+  }
+
+  .em-share-button {
+    background-color: #FFBF00 !important;
+    color: #022851 !important;
+    border-radius: 50% !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all .2s ease-in-out !important;
+  }
+
+  .em-share-button:hover {
+    background-color: #022851 !important;
+    color: #FFBF00 !important;
+  }
+
+  .em-event-meta-data-component {
+    border: none;
+    border-top: 4px dotted #FFBF00;
+    border-radius: 0;
   }
 
 }

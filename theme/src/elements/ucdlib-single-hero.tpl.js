@@ -23,6 +23,7 @@ export function styles() {
     }
     .img-flex {
       width: 100%;
+      margin-bottom: 1rem;
     }
     .img-container {
       position: relative;

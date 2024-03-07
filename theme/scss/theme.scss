@@ -1,22 +1,10 @@
 @use "@ucd-lib/theme-sass/1_base_html/_main.scss" as base_main;
+@use "@ucd-lib/theme-sass/2_base_class/_headings.scss" as heading_classes;
 @use "@ucd-lib/theme-sass/2_base_class/_lists.scss" as lists;
 @use "@ucd-lib/theme-sass/4_component/_footer-spacer.scss" as footer_spacer;
 @use "@ucd-lib/theme-sass/4_component/_footer.scss" as footer;
 @use "@ucd-lib/theme-sass/4_component/_nav-footer.scss" as nav_footer;
 @use "@ucd-lib/theme-sass/4_component/_social-follow.scss" as social_follow;
+@use "@ucd-lib/theme-sass/4_component/_tags.scss" as tags;
 @use "@ucd-lib/theme-sass/4_component/_uc-footer.scss" as uc_footer;
 @use "@ucd-lib/theme-sass/5_layout/_l-container.scss" as l_container;
-
-@use "@ucd-lib/theme-sass/2_base_class/_buttons-mixin.scss" as *;
-
-.ucdlib-footer {
-  .btn {
-    @include btn();
-  }
-  .btn--primary {
-    @include btn--primary();
-  }
-  .btn--alt2 {
-    @include btn--alt2();
-  }
-}
