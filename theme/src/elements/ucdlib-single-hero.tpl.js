@@ -44,6 +44,9 @@ export function styles() {
       display: flex;
       flex-direction: column;
     }
+    .text-content {
+      margin: auto 0;
+    }
     .register-container {
       margin-top: 1rem;
     }
@@ -113,7 +116,7 @@ return html`
             `}
         </div>
       </div>
-      <div>
+      <div class='text-content'>
         <h1 class="heading--primary">${this.headingText}</h1>
         <div class='dates-container'>
           <slot name="dates"></slot>

@@ -12,6 +12,16 @@
     .em-list_dates__container .fa-clock {
       color: #73ABDD;
     }
+
+    .location-address {
+      font-weight: 700;
+      display: flex;
+      i {
+        color: #73ABDD;
+        margin-right: .5rem;
+      }
+    }
+
     .user-action, .em-actions {
       .fa-long-arrow-alt-right {
         display: none;
@@ -118,6 +128,17 @@
     margin-top: 2rem;
   }
 
+  .em-about_info + .em-about_description {
+    margin-top: 1rem;
+  }
+  .em-about_info .em-divider:last-child {
+    display: none;
+  }
+
+  .hosted-by {
+    margin-bottom: .5rem;
+  }
+
   .em-share-button {
     background-color: #FFBF00 !important;
     color: #022851 !important;
@@ -138,9 +159,24 @@
   }
 
   .em-event-meta-data-component {
+    padding: 1rem 0;
     border: none;
     border-top: 4px dotted #FFBF00;
     border-radius: 0;
+    margin-bottom: 0;
   }
 
+}
+
+.ucdlib-single--place {
+  .ucdlib-event-title-container {
+    margin-bottom: .5rem;
+  }
+  .em-content-bottom {
+    border-top: 4px dotted #FFBF00;
+    padding-top: 1.5rem;
+  }
+  .em-section_map {
+    border-top: none;
+  }
 }

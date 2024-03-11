@@ -1,0 +1,8 @@
+@use "@ucd-lib/theme-sass/2_base_class/_buttons-mixin.scss" as *;
+
+.ucdlib-btn {
+
+  &.btn--invert {
+    @include btn--invert();
+  }
+}
