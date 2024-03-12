@@ -32,6 +32,29 @@ export default class UrlParser {
   }
 
   /**
+   * @description Get the search parameters for the url
+   * @returns {URLSearchParams}
+   */
+  getParams(){
+    const url = new URL(this.url);
+    return new URLSearchParams(url.search);
+  }
+
+  /**
+   * @description Get the origin of the url
+   * @returns {String}
+   */
+  getOrigin(){
+    const url = new URL(this.url);
+    return url.origin;
+  }
+
+  getPath(){
+    const url = new URL(this.url);
+    return url.pathname;
+  }
+
+  /**
    * @description Get the start date from the calendar url path
    * It is usually the last three path segments - restOfUrl/year/month/day
    * @returns {Date}
