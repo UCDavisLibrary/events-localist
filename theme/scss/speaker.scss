@@ -1,0 +1,43 @@
+.speakers-content {
+  margin-top: 1rem;
+}
+
+.ucdlib-speaker {
+  display: flex;
+  margin-bottom: 1rem;
+
+  .ucdlib-speaker__photo {
+    margin-right: .5rem;
+    max-width: 15%;
+    min-width: 15%;
+  }
+  .ucdlib-speaker__photo img {
+    width: 100%;
+  }
+  .ucdlib-h5 {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 480px) {
+    .ucdlib-speaker__photo {
+      margin-right: 1rem;
+    }
+  }
+
+  .ucdlib-speaker__position {
+    color: #4C4C4C;
+    font-size: 0.87474rem;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .ucdlib-speaker__description {
+    margin-top: .5rem;
+  }
+  .ucdlib-speaker__website {
+    padding: .25rem 0;
+  }
+  .em-card_social-links {
+    padding: .25rem 0;
+  }
+}

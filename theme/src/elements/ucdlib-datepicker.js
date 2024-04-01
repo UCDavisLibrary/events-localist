@@ -26,6 +26,7 @@ export default class UcdlibDatepicker extends LitElement {
       logUrl: {type: Boolean, attribute: 'log-url'},
       datePickerId: {type: String, attribute: 'date-picker-id'},
       startOfWeek: {type: Boolean, attribute: 'start-of-week'},
+      hideResetButton: {type: Boolean, attribute: 'hide-reset-button'},
       selectedDate: {state: true},
       isSameYear: {state: true}
     }
@@ -46,6 +47,7 @@ export default class UcdlibDatepicker extends LitElement {
     this.logUrl = false;
     this.buttonText = 'Reset to Present';
     this.startOfWeek = false;
+    this.hideResetButton = false;
 
     // necessary if more than one element on the page
     this.datePickerId = Math.random().toString(36).substring(10);
@@ -98,6 +100,7 @@ export default class UcdlibDatepicker extends LitElement {
 
     // set start date
     const startDate = urlParser.getStartDate();
+    this.hideResetButton = this._isSameDate(startDate, new Date());
     this.datePicker.setDate(startDate);
     this.selectedDate = startDate;
 
@@ -195,6 +198,16 @@ export default class UcdlibDatepicker extends LitElement {
     const visibleYear = this.datePicker.currentYear;
     const today = new Date();
     this.isSameYear = today.getFullYear() === visibleYear;
+  }
+
+  /**
+   * @description Utility function to determine if two dates are the same
+   * @param {DateTime} date1
+   * @param {DateTime} date2
+   * @returns
+   */
+  _isSameDate(date1, date2){
+    return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate();
   }
 
 }

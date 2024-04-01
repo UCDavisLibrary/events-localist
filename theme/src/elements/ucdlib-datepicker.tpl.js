@@ -81,18 +81,6 @@ export function styles() {
       padding: .5rem;
     }
 
-    @container ucdlib-datepicker (min-width: 500px) {
-      .qs-datepicker {
-        font-size: 1.5rem;
-      }
-      .qs-squares {
-        padding: .5rem 1rem;
-      }
-      .btn-container {
-        padding: 1rem;
-      }
-    }
-
     #dp-root {
       display: none !important;
     }
@@ -135,7 +123,7 @@ return html`
       <input id='dp-root' />
       <input id='dp-end' />
     </div>
-    <div class='btn-container'>
+    <div class='btn-container' ?hidden=${this.hideResetButton}>
       <a href="${this.getCalendarUrl()}/week" class="btn btn--invert btn--block">
         <span class='btn__icon'>${clockIcon}</span>
         <span>${this.buttonText}</span>

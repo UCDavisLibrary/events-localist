@@ -4,5 +4,7 @@
 @use './theme.scss' as theme;
 @use './channel.scss' as channel;
 @use './custom.scss' as custom;
+@use './headings.scss' as headings;
 @use './single.scss' as single;
 @use './sitewide-shims.scss' as sitewide_shims;
+@use './speaker.scss' as speaker;

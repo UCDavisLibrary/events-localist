@@ -5,4 +5,8 @@
   &.btn--invert {
     @include btn--invert();
   }
+
+  &.btn--alt2 {
+    @include btn--alt2();
+  }
 }

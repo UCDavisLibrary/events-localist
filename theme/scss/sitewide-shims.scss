@@ -1,3 +1,10 @@
+html, body {
+  -moz-osx-font-smoothing: auto;
+  -webkit-font-smoothing: auto;
+}
+footer .em-links-item {
+  font-size: .875rem !important;
+}
 .em-content_label {
   text-transform: initial;
 }
