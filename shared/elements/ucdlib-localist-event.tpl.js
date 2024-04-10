@@ -2,7 +2,9 @@ import { html, svg, css } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import headings from "@ucd-lib/theme-sass/1_base_html/_headings.css.js";
-import headingsClass from "@ucd-lib/theme-sass/2_base_class/_headings.css.js";
+import buttons from "@ucd-lib/theme-sass/2_base_class/_buttons.css.js";
+
+import vm_teaser from "@ucd-lib/theme-sass/4_component/_vm-teaser.css.js";
 
 export function styles() {
   const elementStyles = css`
@@ -33,13 +35,11 @@ export function styles() {
       overflow: hidden;
       padding-top: 56.25%;
     }
-    .heading--highlight a {
-      text-decoration: none;
-      color: var(--forced-contrast-heading-primary, #022851);
-    }
-    .heading--highlight a:hover {
-      text-decoration: underline;
-      color: var(--forced-contrast-heading-primary, #022851);
+    .aspect--1x1 {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      padding-top: 100%;
     }
     .icon-grid {
       display: grid;
@@ -51,22 +51,39 @@ export function styles() {
     .icon-grid .icon-grid__icon {
       color: #73ABDD;
     }
-    .event-template-teaser .img-container {
-      margin-right: .5rem;
-      max-width: 15%;
+    .event-template-highlight {
+      padding: 1rem;
+      color: #fff;
     }
-    .event-template-teaser img {
-      width: 100%;
-      height: auto;
+    .event-template-highlight h4 {
+      color: #fff;
+      margin-bottom: .5rem;
     }
-    .event-template-teaser .excerpt {
-      margin-bottom: .25rem;
+    .event-template-highlight .excerpt {
+      margin-bottom: .5rem;
     }
-    @media (min-width: 480px) {
-      .event-template-teaser .img-container {
-        margin-right: 1rem;
-        max-width: 25%;
-      }
+    .event-template-highlight .icon-grid {
+      color: #fff;
+    }
+    .event-template-highlight .icon-grid .icon-grid__icon {
+      color: #fff;
+    }
+    .event-template-highlight .btn {
+      box-sizing: border-box;
+      margin-top: 1rem;
+    }
+    .vm-teaser__figure {
+      width: 20%;
+      max-width: 135px;
+    }
+    .vm-teaser__figure a {
+      display: block;
+    }
+    .vm-teaser .excerpt {
+      margin-top: .5rem;
+    }
+    .vm-teaser .icon-grid {
+      margin-top: .5rem;
     }
     .event-template-card .excerpt {
       margin-bottom: .25rem;
@@ -78,7 +95,8 @@ export function styles() {
   `;
   return [
     headings,
-    headingsClass,
+    buttons,
+    vm_teaser,
     elementStyles
   ];
 }
@@ -94,23 +112,19 @@ export function render() {
 
 export function teaser(){
   return html`
-    <div class="event-template-teaser flex">
-      <div class="img-container">
-        ${this.event.img_html ? html`
-          <a href=${this.event.url}>
-            ${unsafeHTML(this.event.img_html)}
-          </a>
-        ` : ''}
+    <div class="vm-teaser">
+      <div class='vm-teaser__figure'>
+        <a class='aspect--1x1 u-background-image' href=${this.event.url} style="background-image: url('${this.teaserImageSrc}')"></a>
       </div>
-      <div class="event-body">
-        <div>
-          <h2 class='heading--highlight'><a href=${this.event.url}>${this.name}</a></h2>
-          <div ?hidden=${this.hideExcerpt} class='excerpt'>${this.getExcerpt()}</div>
-          ${renderIconGrid.call(this)}
+      <div class='vm-teaser__body'>
+        <div class='vm-teaser__title'>
+          <a href='${this.event.url}'>${this.name}</a>
         </div>
+        <div ?hidden=${this.hideExcerpt} class='excerpt'>${this.getExcerpt()}</div>
+        ${renderIconGrid.call(this)}
       </div>
     </div>
-    `
+  `;
 }
 
 export function card(){
@@ -120,12 +134,23 @@ export function card(){
       <div class="aspect--16x9 u-background-image" style="background-image: url('${this.cardImageSrc}')"></div>
       </a>
       <div>
-        <h2 class='heading--highlight'><a href=${this.event.url}>${this.name}</a></h2>
+        <h2 class='vm-teaser__title'><a href=${this.event.url}>${this.name}</a></h2>
         <div ?hidden=${this.hideExcerpt} class='excerpt'>${this.getExcerpt()}</div>
         ${renderIconGrid.call(this)}
       </div>
     </div>
   `
+}
+
+export function highlight(){
+  return html`
+    <div class="event-template-highlight u-background-image" style="background-image:url('${this.cardImageSrc}')">
+      <h4>${this.name}</h4>
+      <div ?hidden=${this.hideExcerpt} class='excerpt'>${this.getExcerpt()}</div>
+      ${renderIconGrid.call(this)}
+      <a href=${this.event.url} class='btn btn--primary'>${this.highlightButtonText}</a>
+    </div>
+  `;
 }
 
 function renderIconGrid(){

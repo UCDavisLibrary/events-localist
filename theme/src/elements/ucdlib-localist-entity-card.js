@@ -8,6 +8,7 @@ export default class UcdlibLocalistEntityCard extends LitElement {
   static get properties() {
     return {
       entityType: {type: String, attribute: 'entity-type'},
+      template: {type: String},
       name: {type: String},
       url: {type: String},
       address: {type: String},
@@ -15,6 +16,8 @@ export default class UcdlibLocalistEntityCard extends LitElement {
       excerpt: {type: String},
       imgCard: {type: String, attribute: 'img-card'},
       imgTeaser: {type: String, attribute: 'img-teaser'},
+      imgCardSrc: {type: String, attribute: 'img-card-src'},
+      imgTeaserSrc: {type: String, attribute: 'img-teaser-src'},
       hideExcerpt: { type: Boolean, attribute: 'hide-excerpt'},
       excerptLength: { type: Number, attribute: 'excerpt-length' }
     }
@@ -27,7 +30,8 @@ export default class UcdlibLocalistEntityCard extends LitElement {
   constructor() {
     super();
     this.render = render.bind(this);
-    this.entityType = 'place';
+    this.entityType = 'places';
+    this.template = 'teaser';
     this.name = '';
     this.url = '';
     this.address = '';
@@ -44,9 +48,21 @@ export default class UcdlibLocalistEntityCard extends LitElement {
   _onDomChildPropertyChanged() {
     this.name = this.name.replace(/&amp;/g, '&');
     this._setExcerpt();
-
+    this._setImgSrc(this.imgCard, 'imgCardSrc');
+    this._setImgSrc(this.imgTeaser, 'imgTeaserSrc');
 
     this.requestUpdate();
+  }
+
+  _setImgSrc(html, eleProp ){
+    if ( !html || !eleProp ) return;
+
+    // get the image src from the img_html string
+    const imgContainer = document.createElement('div');
+    imgContainer.innerHTML = html;
+    const img = imgContainer.querySelector('img');
+    if ( !img ) return;
+    this[eleProp] = img.src || '';
   }
 
   /**

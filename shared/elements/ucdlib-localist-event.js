@@ -9,7 +9,7 @@ import DatetimeUtils from "../utils/datetime.js";
  * @property {Object} event - the localist event object
  * @property {Boolean} hideExcerpt - hide the event description
  * @property {Number} excerptLength - the length of the event description excerpt
- * @property {String} template - the template to use for rendering the event (teaser, card)
+ * @property {String} template - the template to use for rendering the event (teaser, card, highlight)
  */
 export default class UcdlibLocalistEvent extends LitElement {
 
@@ -18,6 +18,10 @@ export default class UcdlibLocalistEvent extends LitElement {
       event: { type: Object },
       hideExcerpt: { type: Boolean, attribute: 'hide-excerpt'},
       excerptLength: { type: Number, attribute: 'excerpt-length' },
+      customDisplayDate: { type: String, attribute: 'custom-display-date' },
+      cardImageSrc: { type: String, attribute: 'card-image-src'},
+      teaserImageSrc: { type: String, attribute: 'teaser-image-src'},
+      highlightButtonText: { type: String, attribute: 'highlight-button-text'},
       template: { type: String },
       dataLoaded: { state: true },
       templates: { state: true },
@@ -25,7 +29,6 @@ export default class UcdlibLocalistEvent extends LitElement {
       endDate: { state: true },
       firstDate: { state: true },
       lastDate: { state: true },
-      cardImageSrc: { state: true },
       name: { state: true }
     }
   }
@@ -42,10 +45,16 @@ export default class UcdlibLocalistEvent extends LitElement {
     this.hideExcerpt = false;
     this.excerptLength = 140;
     this.name = '';
+    this.customDisplayDate = '';
+    this.highlightButtonText = 'Register';
+
+    this.cardImageSrc = '';
+    this.teaserImageSrc = '';
 
     this.templates = {
       'teaser': templates.teaser.bind(this),
-      'card': templates.card.bind(this)
+      'card': templates.card.bind(this),
+      'highlight': templates.highlight.bind(this)
     }
     this.template = 'teaser';
 
@@ -65,7 +74,7 @@ export default class UcdlibLocalistEvent extends LitElement {
     this.endDate = DatetimeUtils.dateFromLocalist(this.event.ends_at);
     this.firstDate = DatetimeUtils.dateFromIsoDate(this.event.first_date);
     this.lastDate = DatetimeUtils.dateFromIsoDate(this.event.last_date);
-    this.setCardImageSrc();
+    this.setImageSrcs();
     this.setName();
 
     this.requestUpdate();
@@ -73,9 +82,9 @@ export default class UcdlibLocalistEvent extends LitElement {
   }
 
   /**
-   * @description Sets the cardImageSrc element property from the img_html event property
+   * @description Sets the cardImageSrc/teaserImageSrc element property from the img_html event property
    */
-  setCardImageSrc(){
+  setImageSrcs(){
     if ( !this.event.img_html ) return;
 
     // get the image src from the img_html string
@@ -83,8 +92,9 @@ export default class UcdlibLocalistEvent extends LitElement {
     imgContainer.innerHTML = this.event.img_html;
     const img = imgContainer.querySelector('img');
     if ( !img ) return;
-    const imgSrc = (img.src || '').replace('square_300', 'card');
-    this.cardImageSrc = imgSrc;
+    const imgSrc = (img.src || '');
+    this.teaserImageSrc = imgSrc;
+    this.cardImageSrc = imgSrc.replace('square_300', 'card');
   }
 
   setName(){
@@ -108,6 +118,8 @@ export default class UcdlibLocalistEvent extends LitElement {
    * @returns {String}
    */
   getDateString(){
+
+    if ( this.customDisplayDate ) return this.customDisplayDate;
 
     // this is a long running multi-day event, like an exhibit
     if (
