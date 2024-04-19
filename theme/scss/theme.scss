@@ -9,3 +9,10 @@
 @use "@ucd-lib/theme-sass/4_component/_uc-footer.scss" as uc_footer;
 @use "@ucd-lib/theme-sass/5_layout/_l-container.scss" as l_container;
 @use "@ucd-lib/theme-sass/6_utility/u-space.scss" as u_space;
+
+
+@use "@ucd-lib/theme-sass/4_component/_marketing-highlight-horizontal.scss" as marketing_highlight_horizontal;
+.marketing-highlight-horizontal__image img {
+  height: auto;
+  vertical-align: middle;
+}
