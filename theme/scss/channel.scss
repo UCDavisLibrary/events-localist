@@ -36,3 +36,13 @@ ucdlib-channel {
     }
   }
 }
+
+@media (min-width: 48em) {
+  .content-wrapper > .featured_section_component:first-child, .em-event_feedback--page.em-event_feedback--session .em-event_feedback--detail > .featured_section_component:first-child, .content-wrapper > .tabs_component:first-child .featured_section_component, .em-event_feedback--page.em-event_feedback--session .em-event_feedback--detail > .tabs_component:first-child .featured_section_component {
+    margin-top: 0 !important;
+  }
+}
+
+.content-wrapper > .featured_section_component:first-child, .em-event_feedback--page.em-event_feedback--session .em-event_feedback--detail > .featured_section_component:first-child, .content-wrapper > .tabs_component:first-child .featured_section_component, .em-event_feedback--page.em-event_feedback--session .em-event_feedback--detail > .tabs_component:first-child .featured_section_component {
+  margin-top: 0 !important;
+}
