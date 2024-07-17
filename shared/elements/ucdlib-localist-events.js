@@ -1,7 +1,7 @@
 import { LitElement } from 'lit';
 import * as templates from "./ucdlib-localist-events.tpl.js";
 
-import { MutationObserverController } from '@ucd-lib/theme-elements/utils/controllers/index.js';
+import { MutationObserverController } from '@ucd-lib/theme-elements/utils/controllers/mutation-observer.js';
 import { JsonScriptObserver } from "../controllers/json-script-observer.js";
 
 /**
@@ -16,6 +16,8 @@ export default class UcdlibLocalistEvents extends LitElement {
       calendarLinkText: { type: String, attribute: 'calendar-link-text' },
       eventLayout: { type: String, attribute: 'event-layout' },
       columnCount: { type: Number, attribute: 'column-count' },
+      noEventsText: { type: String, attribute: 'no-events-text' },
+      noEventsTextCentered: { type: Boolean, attribute: 'no-events-text-centered' },
       events: { state: true }
     }
   }
@@ -65,6 +67,8 @@ export default class UcdlibLocalistEvents extends LitElement {
     this.showCalendarLink = false;
     this.calendarLinkText = 'View Full Calendar';
     this.allowedLayouts = ['teaser', 'card'];
+    this.noEventsText = 'No events scheduled at this time. Please check back later.';
+    this.noEventsTextCentered = false;
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('card_size') == 'medium') {

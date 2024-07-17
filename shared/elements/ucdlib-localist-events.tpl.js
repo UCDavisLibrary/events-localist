@@ -16,6 +16,10 @@ export function styles() {
   .btn {
     box-sizing: border-box;
   }
+  .centered {
+    text-align: center;
+  }
+
   `;
 
   return [
@@ -28,8 +32,11 @@ export function styles() {
 export function render() {
 
   return html`
-    <div>
+    <div ?hidden=${!this.events.length}>
       ${this.columnCount == 1 ? renderOneColumn.call(this) : renderMultiColumn.call(this)}
+    </div>
+    <div ?hidden=${this.events.length} class=${this.noEventsTextCentered ? 'centered' : ''}>
+      ${this.noEventsText}
     </div>
     <div ?hidden=${!this.showCalendarLink}>
       <a href=${this.calendarUrl} class="btn btn--primary btn--block">${this.calendarLinkText}</a>

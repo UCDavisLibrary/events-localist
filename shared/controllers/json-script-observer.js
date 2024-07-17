@@ -1,4 +1,4 @@
-import { MutationObserverController } from '@ucd-lib/theme-elements/utils/controllers/index.js';
+import { MutationObserverController } from '@ucd-lib/theme-elements/utils/controllers/mutation-observer.js';
 
 /**
  * @description A controller that will watch the child list of the host element for a json script tag
