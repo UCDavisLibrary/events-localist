@@ -114,6 +114,16 @@ export default class UcdlibLocalistEvent extends LitElement {
   }
 
   /**
+   * @description Returns the location string for the event
+   * @returns {String}
+   */
+  getLocation(){
+    if ( !this.event.location_name && !this.event.room_number ) return '';
+    const location = `${this.event.location_name || ''} ${this.event.room_number || ''}`.replace(/&amp;/g, '&');
+    return location.trim();
+  }
+
+  /**
    * @description Returns a formatted date string for the event
    * @returns {String}
    */

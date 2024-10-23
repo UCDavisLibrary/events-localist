@@ -70,6 +70,17 @@ export default class UcdlibBreadcrumbs extends LitElement {
           href: this.getDatalabChannel()
         })
       }
+
+      // replace any calendar links with datalab calendar links
+      crumbs.forEach(crumb => {
+        if ( !crumb.href ) return;
+        const url = new URL(crumb.href);
+        const path = url.pathname.split('/');
+        if ( path[1] == 'calendar' ){
+          crumb.href = crumb.href.replace('/calendar', `/datalab/calendar`);
+        }
+      });
+
     } else {
       crumbs[0].text = this.localistHomeText;
       if ( !this.isChannelPage ){

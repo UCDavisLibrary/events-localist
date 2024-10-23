@@ -170,7 +170,7 @@ function renderIconGrid(){
       <div>
         ${this.event.experience == 'virtual' ? html`
           <span>Online Event</span>` : html`
-          <span>${this.event.location_name} ${this.event.room_number}</span>
+          <span>${this.getLocation()}</span>
           <span ?hidden=${this.event.experience != 'hybrid'}>(and online)</span>
           `}
       </div>
