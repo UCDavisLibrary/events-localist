@@ -114,7 +114,12 @@ export function teaser(){
   return html`
     <div class="vm-teaser">
       <div class='vm-teaser__figure'>
-        <a class='aspect--1x1 u-background-image' href=${this.event.url} style="background-image: url('${this.teaserImageSrc}')"></a>
+        <a
+          aria-label='${this.name}'
+          class='aspect--1x1 u-background-image'
+          href=${this.event.url}
+          style="background-image: url('${this.teaserImageSrc}')">
+        </a>
       </div>
       <div class='vm-teaser__body'>
         <div class='vm-teaser__title'>
@@ -130,7 +135,7 @@ export function teaser(){
 export function card(){
   return html`
     <div class="event-template-card">
-      <a href=${this.event.url} class='event-template-card__image'>
+      <a href=${this.event.url} class='event-template-card__image' aria-label='${this.name}'>
       <div class="aspect--16x9 u-background-image" style="background-image: url('${this.cardImageSrc}')"></div>
       </a>
       <div>
