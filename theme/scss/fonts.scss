@@ -12,11 +12,6 @@
     src: url("https://files.library.ucdavis.edu/localist/fonts/fa/fa-solid-900.eot");
     src: url("https://files.library.ucdavis.edu/localist/fonts/fa/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("https://files.library.ucdavis.edu/localist/fonts/fa/fa-solid-900.woff2") format("woff2"), url("https://files.library.ucdavis.edu/localist/fonts/fa/fa-solid-900.woff") format("woff"), url("https://files.library.ucdavis.edu/localist/fonts/fa/fa-solid-900.ttf") format("truetype"), url("https://files.library.ucdavis.edu/localist/fonts/fa/fa-solid-900.svg#fontawesome") format("svg");
   }
-  .fa,
-  .fas {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-  }
 
   @include font-face(Proxima-Nova, "https://files.library.ucdavis.edu/localist/fonts/proximanova/proximanova-regular-webfont", 400, normal);
   @include font-face(Proxima-Nova, "https://files.library.ucdavis.edu/localist/fonts/proximanova/proximanova-bold-webfont", 700, normal);
