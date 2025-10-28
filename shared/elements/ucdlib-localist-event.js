@@ -22,6 +22,7 @@ export default class UcdlibLocalistEvent extends LitElement {
       cardImageSrc: { type: String, attribute: 'card-image-src'},
       teaserImageSrc: { type: String, attribute: 'teaser-image-src'},
       highlightButtonText: { type: String, attribute: 'highlight-button-text'},
+      highlightAppendedText: { type: String, attribute: 'highlight-appended-text'},
       template: { type: String },
       dataLoaded: { state: true },
       templates: { state: true },
@@ -47,6 +48,7 @@ export default class UcdlibLocalistEvent extends LitElement {
     this.name = '';
     this.customDisplayDate = '';
     this.highlightButtonText = 'Register';
+    this.highlightAppendedText = '';
 
     this.cardImageSrc = '';
     this.teaserImageSrc = '';

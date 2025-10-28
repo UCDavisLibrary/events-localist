@@ -52,7 +52,7 @@ export function styles() {
       color: #73ABDD;
     }
     .event-template-highlight {
-      padding: 1rem;
+      padding: 2rem;
       color: #fff;
     }
     .event-template-highlight h4 {
@@ -71,6 +71,21 @@ export function styles() {
     .event-template-highlight .btn {
       box-sizing: border-box;
       margin-top: 1rem;
+    }
+    .event-template-highlight .highlight-appended-text {
+      margin-top: 1rem;
+    }
+    .event-template-highlight .highlight-appended-text a {
+      color: #fff;
+      text-decoration: underline;
+    }
+    .event-template-highlight .highlight-appended-text a:hover,
+    .event-template-highlight .highlight-appended-text a:focus,
+    .event-template-highlight .highlight-appended-text a:active,
+    .event-template-highlight .highlight-appended-text a:visited
+     {
+      color: #fff;
+      text-decoration: underline;
     }
     .vm-teaser__figure {
       width: 20%;
@@ -154,6 +169,7 @@ export function highlight(){
       <div ?hidden=${this.hideExcerpt} class='excerpt'>${this.getExcerpt()}</div>
       ${renderIconGrid.call(this)}
       <a href=${this.event.url} class='btn btn--primary'>${this.highlightButtonText}</a>
+      ${this.highlightAppendedText ? html`<div class='highlight-appended-text'>${unsafeHTML(this.highlightAppendedText)}</div>` : ''}
     </div>
   `;
 }
