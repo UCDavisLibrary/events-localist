@@ -79,7 +79,7 @@ class DomUtils {
    * @returns {HTMLFormElement}
    */
   getFilterForm(){
-    return document.querySelector('#filter-dropdown');
+    return document.querySelector('#filter-dropdown form');
   }
 
 }
